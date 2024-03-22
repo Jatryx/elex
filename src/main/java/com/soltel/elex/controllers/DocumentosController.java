@@ -1,21 +1,26 @@
 package com.soltel.elex.controllers;
 
 
+
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soltel.elex.models.ExpedientesModel;
+import com.itextpdf.text.pdf.codec.Base64.InputStream;
 import com.soltel.elex.models.DocumentosModel;
 import com.soltel.elex.services.DocumentosService;
 import com.soltel.elex.services.ExpedientesService;
@@ -93,5 +98,24 @@ public class DocumentosController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Documento no existe");
+    }
+
+    @PostMapping("/generatePdfPorBlop/{id}")
+    public ResponseEntity<Void> generatePdfAndSave(@PathVariable Integer id) {
+        service.generatePdfAndSave(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/readPdf/{id}")
+    public ResponseEntity<byte[]> readPdf(@PathVariable Integer id) {
+        byte[] data = service.readPdf(id);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(data);
+    }
+
+    @PostMapping("/generatePdfPorRuta/{id}")
+    public void generatePdfAndSave1(@PathVariable Integer id) {
+        service.generatePdfAndSaveToFile(id);
     }
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -37,6 +38,10 @@ public class DocumentosModel {
     @ManyToOne
     @JoinColumn(name = "expediente", nullable = false)
     private ExpedientesModel expediente;
+
+    @Lob
+    @Column(name = "data", nullable = true)
+    private byte[] archivoPdf;
 
     public DocumentosModel() {
     }
@@ -106,5 +111,13 @@ public class DocumentosModel {
 
     public void setExpediente(ExpedientesModel expediente) {
         this.expediente = expediente;
+    }
+
+    public byte[] getArchivoPdf() {
+        return archivoPdf;
+    }
+
+    public void setArchivoPdf(byte[] archivoPdf) {
+        this.archivoPdf = archivoPdf;
     }
 }
