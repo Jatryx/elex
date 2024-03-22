@@ -1,0 +1,97 @@
+package com.soltel.elex.controllers;
+
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.soltel.elex.models.ExpedientesModel;
+import com.soltel.elex.models.DocumentosModel;
+import com.soltel.elex.services.DocumentosService;
+import com.soltel.elex.services.ExpedientesService;
+
+@RestController
+@RequestMapping("/api/documentos")
+public class DocumentosController {
+
+    @Autowired
+    private DocumentosService service;
+
+    @Autowired
+    private ExpedientesService expedienteService;
+    
+    @GetMapping("/consultarExistentes")
+    public List<DocumentosModel> dameDocumentosExistentes() {
+        return service.consultarDocumentos();
+    }
+
+    @PostMapping("/insertar/{ruta}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
+    public ResponseEntity<?> insertarDocumento(String ruta, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
+        
+        DocumentosModel documento = new DocumentosModel();
+        Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
+
+        if(expediente.isPresent())
+        {
+            documento.setRuta(ruta);
+            documento.setPrecio(precio);
+            documento.setNombreDocumento(nombreDocumento);
+            documento.setDescripcion(descripcion);
+            documento.setExpediente(expediente.get());
+
+            DocumentosModel documentoGuardado = service.insertarDocumento(documento);
+            return ResponseEntity.ok(documentoGuardado);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
+    }
+
+    @PutMapping("/actualizar/{id}/{ruta}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
+    public ResponseEntity<?> actualizarDocumento(int id, String ruta, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
+        
+        Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
+        Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
+
+        if(documentoBuscado.isPresent() && expediente.isPresent())
+        {
+            DocumentosModel documento = documentoBuscado.get();
+            documento.setRuta(ruta);
+            documento.setPrecio(precio);
+            documento.setNombreDocumento(nombreDocumento);
+            documento.setDescripcion(descripcion);
+            documento.setExpediente(expediente.get());
+
+            DocumentosModel documentoGuardado = service.actualizarDocumento(documento);
+            return ResponseEntity.ok(documentoGuardado);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<?> eliminarDocumento(int id) {
+        
+        Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
+
+        if(documentoBuscado.isPresent())
+        {
+            DocumentosModel documento = documentoBuscado.get();
+            documento.setBorrado(true);
+
+            DocumentosModel documentoGuardado = service.actualizarDocumento(documento);
+            return ResponseEntity.ok(documentoGuardado);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Documento no existe");
+    }
+}
