@@ -53,7 +53,6 @@ public class Tipos_expedienteController {
         }
     }
 
-    // Otra forma de hacerlo...
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<Void> borrarTipo(@PathVariable int id) {
         return servicioTipo.obtenerTipoPorId(id)
@@ -63,4 +62,5 @@ public class Tipos_expedienteController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
 }
