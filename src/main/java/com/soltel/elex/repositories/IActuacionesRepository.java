@@ -1,5 +1,6 @@
 package com.soltel.elex.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,10 @@ public interface IActuacionesRepository extends JpaRepository<ActuacionesModel, 
     @Query("SELECT a FROM ActuacionesModel a WHERE a.borrado = true")
     List<ActuacionesModel> findAllBorrados();
     
+    @Query("SELECT a FROM ActuacionesModel a WHERE a.expediente.id = :idExpediente")
+    List<ActuacionesModel> findAllByExpedienteId(int idExpediente);
+
+    @Query("SELECT a FROM ActuacionesModel a WHERE a.usuario = :usuario AND a.fecha = :fecha")
+    List<ActuacionesModel> findAllByUsuarioAndFecha(String usuario, LocalDate fecha);
     
 }

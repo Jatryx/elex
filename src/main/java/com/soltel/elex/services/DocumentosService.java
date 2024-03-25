@@ -2,6 +2,7 @@ package com.soltel.elex.services;
 
 
 import java.io.ByteArrayOutputStream;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+
 import org.springframework.stereotype.Service;
+
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -18,8 +21,10 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+
 import com.soltel.elex.models.DocumentosModel;
 import com.soltel.elex.repositories.IDocumentosRepository;
+
 
 @Service
 public class DocumentosService {
@@ -144,4 +149,17 @@ public class DocumentosService {
         }
     }
 
+    public List<DocumentosModel> obtenerDocumentosPorExpediente(int idExpediente) {
+        return repository.findAllByExpedienteId(idExpediente);
+    }
+
+    public List<DocumentosModel> obtenerNombreDocumento(String nombreDocumento) {
+        List<DocumentosModel> documentos = repository.findByNombreDocumento(nombreDocumento);
+        
+        if (documentos.isEmpty()) {
+            throw new RuntimeException("No se encontró ningún documento con el nombre: " + nombreDocumento);
+        }
+        
+        return documentos;
+    }
 }

@@ -2,14 +2,17 @@ package com.soltel.elex.controllers;
 
 
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -118,5 +121,15 @@ public class DocumentosController {
     @PostMapping("/generatePdfPorRuta/{id}")
     public void generatePdfAndSave1(@PathVariable Integer id) {
         service.generatePdfAndSaveToFile(id);
+    }
+
+    @GetMapping("/documentosExpediente/{idExpediente}")
+    public List<DocumentosModel> dameDocumentosPorExpediente(@PathVariable int idExpediente) {
+        return service.obtenerDocumentosPorExpediente(idExpediente);
+    }
+
+    @GetMapping("/documentosNombre/{nombreDocumento}")
+    public List<DocumentosModel> dameDocumentosPorNombre(@PathVariable String nombreDocumento) {
+        return service.obtenerNombreDocumento(nombreDocumento);
     }
 }

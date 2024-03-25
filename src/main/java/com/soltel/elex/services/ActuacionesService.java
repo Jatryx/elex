@@ -1,5 +1,6 @@
 package com.soltel.elex.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +34,17 @@ public class ActuacionesService {
 
     public Optional<ActuacionesModel> obtenerActuacionPorId(int id) {
         return repository.findById(id);
+    }
+
+    public List<ActuacionesModel> obtenerTodosLasActuacionesExpediente(int idExpediente) {
+        return repository.findAllByExpedienteId(idExpediente);
+    }
+
+    public List<ActuacionesModel> obtenerActuacionesPorResponsableAndFecha(String usuario, LocalDate fecha) {
+        List<ActuacionesModel> actuaciones = repository.findAllByUsuarioAndFecha(usuario, fecha);
+        if (actuaciones.isEmpty()) {
+            throw new RuntimeException("No se encontraron actuaciones para el responsable '" + usuario + "' en la fecha '" + fecha.toString() + "'");
+        }
+        return actuaciones;
     }
 }

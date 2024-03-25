@@ -139,4 +139,20 @@ public class ExpedientesController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
     }
 
+    @GetMapping("/consultarPorTipo/{idTipo}")
+    public List<ExpedientesModel> dameExpedientesPorTipo(@PathVariable int idTipo){
+        return servicioExpediente.obtenerExpedientesPorTipoExpediente(idTipo);
+    }
+
+    @GetMapping("/consultarPorEstadoYFecha/{estado}/{fecha}")
+    public List<ExpedientesModel> dameExpedientesPorEstadoYFecha(@PathVariable String estado, @PathVariable LocalDate fecha){
+        return servicioExpediente.obtenerExpedientesPorEstadoYFecha(estado, fecha);
+    }
+
+    @GetMapping("/consultarPorNig/{nip}")
+    public ResponseEntity<?> dameExpedientePorNig(@PathVariable String nip){
+        ExpedientesModel expediente = servicioExpediente.obtenerExpedientePorNig(nip);
+        return ResponseEntity.ok(expediente);
+    }
+
 }

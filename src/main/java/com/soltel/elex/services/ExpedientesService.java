@@ -42,4 +42,22 @@ public class ExpedientesService {
         return repository.countByTipoExpediente(tipoId);
     }
 
+    public List<ExpedientesModel> obtenerExpedientesPorTipoExpediente(int tipoId) {
+        return repository.findByTipoExpediente(tipoId);
+    }
+
+    //Filtro de expedientes por estado y fecha
+    public List<ExpedientesModel> obtenerExpedientesPorEstadoYFecha(String estado, LocalDate fecha) {
+        List<ExpedientesModel> expedientes = repository.findByEstadoAndFecha(estado, fecha);
+        if (expedientes.isEmpty()) {
+            throw new RuntimeException("No se encontraron expedientes con el estado '" + estado + "' y la fecha '" + fecha.toString() + "'");
+        }
+        return expedientes;
+    }
+
+    //Filtro de expedientes por nig
+    public ExpedientesModel obtenerExpedientePorNig(String nig) {
+        Optional<ExpedientesModel> expedienteOptional = repository.findByNig(nig);
+        return expedienteOptional.orElseThrow(() -> new RuntimeException("No se encontró ningún expediente con el NIG: " + nig));
+    }
 }

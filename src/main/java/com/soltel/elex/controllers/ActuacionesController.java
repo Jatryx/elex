@@ -102,4 +102,13 @@ public class ActuacionesController {
         return ResponseEntity.badRequest().body("Actuación no existe");
     }
     
+    @GetMapping("/consultarPorExpediente/{idExpediente}")
+    public List<ActuacionesModel> dameActuacionesPorExpediente(int idExpediente) {
+        return service.obtenerTodosLasActuacionesExpediente(idExpediente);
+    }
+
+    @GetMapping("/consultarPorUsuarioAndFecha/{usuario}/{fecha}")
+    public List<ActuacionesModel> dameActuacionesPorResponsableAndFecha(String usuario, LocalDate fecha) {
+        return service.obtenerActuacionesPorResponsableAndFecha(usuario, fecha);
+    }
 }

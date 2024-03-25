@@ -1,6 +1,8 @@
 package com.soltel.elex.repositories;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +18,10 @@ public interface IDocumentosRepository extends JpaRepository<DocumentosModel, In
 
     @Query("SELECT d FROM DocumentosModel d WHERE d.borrado = true")
     List<DocumentosModel> findAllBorrados();
+
+    @Query("SELECT d FROM DocumentosModel d WHERE d.expediente.id = :idExpediente")
+    List<DocumentosModel> findAllByExpedienteId(int idExpediente);
+
+    @Query("SELECT d FROM DocumentosModel d WHERE d.nombreDocumento = :nombreDocumento")
+    List<DocumentosModel> findByNombreDocumento(String nombreDocumento);
 }

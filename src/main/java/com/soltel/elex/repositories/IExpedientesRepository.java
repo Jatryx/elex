@@ -1,6 +1,8 @@
 package com.soltel.elex.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +25,12 @@ public interface IExpedientesRepository extends JpaRepository<ExpedientesModel, 
     @Query(value = "SELECT COUNT(e) FROM ExpedientesModel e WHERE e.tipo.id = :tipoId")
     Long countByTipoExpediente(@Param("tipoId") int tipoId);
     
+    @Query("SELECT e FROM ExpedientesModel e WHERE e.tipo.id = :tipoId")
+    List<ExpedientesModel> findByTipoExpediente(@Param("tipoId") Integer tipoId);
+
+    @Query("SELECT e FROM ExpedientesModel e WHERE e.estado = :estado AND e.fecha = :fecha")
+    List<ExpedientesModel> findByEstadoAndFecha(@Param("estado") String estado, @Param("fecha") LocalDate fecha);
+
+    @Query("SELECT e FROM ExpedientesModel e WHERE e.nig = :nig")
+    Optional<ExpedientesModel> findByNig(@Param("nig") String nig);
 }

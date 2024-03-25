@@ -39,4 +39,5 @@ public class Tipos_expedienteService {
         return repository.findById(id);
     }
 
+
 }
