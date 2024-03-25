@@ -21,7 +21,7 @@ public class DocumentosModel {
     private Integer id;
 
     @Column (name = "ruta", nullable = false, length = 255)
-    private String ruta;
+    private String ruta = "ruta a cambiar";
 
     @Column (name = "precio", nullable = false, precision = 6, scale = 2)
     private BigDecimal precio;
@@ -46,12 +46,12 @@ public class DocumentosModel {
     public DocumentosModel() {
     }
 
-    public DocumentosModel(Integer id, String ruta, BigDecimal precio,
+    public DocumentosModel(Integer id,String ruta, BigDecimal precio,
                            String nombreDocumento, String descripcion,
                            ExpedientesModel expediente) {
         this.id = id;
-        this.ruta = ruta;
         this.precio = precio;
+        this.ruta = ruta;
         this.nombreDocumento = nombreDocumento;
         this.descripcion = descripcion;
         this.expediente = expediente;

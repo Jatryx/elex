@@ -32,6 +32,11 @@ public class ActuacionesController {
     public List<ActuacionesModel> dameActuacionesExistentes() {
         return service.consultarActuaciones();
     }
+
+    @GetMapping("/consultarBorradas")
+    public List<ActuacionesModel> dameActuacionesBorradas() {
+        return service.consultarActuacionesBorradas();
+    }
     
 
     @PostMapping("/insertar/{observaciones}/{finalizado}/{fecha}/{usuario}/{responsable1}/{responsable2}/{consejeria}/{idExpediente}")

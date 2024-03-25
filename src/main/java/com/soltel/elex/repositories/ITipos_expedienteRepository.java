@@ -15,4 +15,7 @@ public interface ITipos_expedienteRepository extends JpaRepository<Tipos_expedie
     
     @Query("SELECT t FROM Tipos_expedienteModel t WHERE t.borrado = false")
     List<Tipos_expedienteModel> findAllSinBorrar();
+
+    @Query("SELECT t FROM Tipos_expedienteModel t WHERE t.borrado = true")
+    List<Tipos_expedienteModel> findAllBorrados();
 }

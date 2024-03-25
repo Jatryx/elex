@@ -35,17 +35,51 @@ public class ExpedientesController {
         return servicioExpediente.consultarExpedientesExistentes();
     }
 
-    @PostMapping("/insertar/{nig}/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
-    public ResponseEntity<?> insertarExpediente(@PathVariable String nig, @PathVariable LocalDate fecha, @PathVariable String estado,
+    @GetMapping("/consultarBorrados")
+    public List<ExpedientesModel> dameExpedientesBorrados() {
+        return servicioExpediente.consultarExpedientesBorrados();
+    }
+
+    @PostMapping("/insertar/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
+    public ResponseEntity<?> insertarExpediente(@PathVariable LocalDate fecha, @PathVariable String estado,
     @PathVariable String opciones, @PathVariable String descripcion, @PathVariable int idTiposExpediente)
     {
         ExpedientesModel expediente = new ExpedientesModel();
-        Optional<Tipos_expedienteModel> tipoBuscado = servicioTiposExpediente.obtenerTipoPorId(idTiposExpediente);
+
+        Optional<Tipos_expedienteModel> tipoBuscado = Optional.ofNullable(servicioTiposExpediente.obtenerTipoPorId(idTiposExpediente)
+            .orElseThrow(() -> new IllegalArgumentException("Tipo de expediente no existe")));
         
 
         if(tipoBuscado.isPresent())
         {
         Tipos_expedienteModel tipo = tipoBuscado.get();
+        String materia = tipo.getMateria();
+        String nigConstruido = "";
+
+        switch (materia) {
+            case "Judicial":
+                nigConstruido = "JUD";
+                break;
+            case "Asistencia":
+                nigConstruido = "ASI";
+                break;
+            case "Informe":
+                nigConstruido = "INF";
+                break;
+            case "Moción":
+                nigConstruido = "MOC";
+                break;
+        
+            default:
+                throw new IllegalArgumentException("Materia no válida");
+        }
+
+        int año = fecha.getYear();
+
+        Long cantidadExpedientes = servicioExpediente.contarPorTipoExpediente(idTiposExpediente);
+        int numeroExpediente = cantidadExpedientes.intValue() + 1;
+
+        String nig = nigConstruido + "-" + año + "-" + numeroExpediente;
 
         expediente.setNig(nig);
         expediente.setFecha(fecha);
@@ -62,8 +96,8 @@ public class ExpedientesController {
 
     }
 
-    @PutMapping("/actualizar/{id}/{nig}/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
-    public ResponseEntity<?> updateExpediente (@PathVariable Integer id, @PathVariable String nig, @PathVariable LocalDate fecha, @PathVariable String estado,
+    @PutMapping("/actualizar/{id}/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
+    public ResponseEntity<?> updateExpediente (@PathVariable Integer id, @PathVariable LocalDate fecha, @PathVariable String estado,
     @PathVariable String opciones, @PathVariable String descripcion, @PathVariable int idTiposExpediente)
     {
         Optional<ExpedientesModel> expedienteBuscado = servicioExpediente.obtenerExpedientePorId(id);
@@ -75,7 +109,6 @@ public class ExpedientesController {
             Tipos_expedienteModel tipo = tipoBuscado.get();
             ExpedientesModel expedienteActualizado = expedienteBuscado.get();
 
-            expedienteActualizado.setNig(nig);
             expedienteActualizado.setFecha(fecha);
             expedienteActualizado.setEstado(estado);
             expedienteActualizado.setOpciones(opciones);

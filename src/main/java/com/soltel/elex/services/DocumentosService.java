@@ -11,15 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.soltel.elex.models.DocumentosModel;
 import com.soltel.elex.repositories.IDocumentosRepository;
@@ -31,7 +28,11 @@ public class DocumentosService {
     private IDocumentosRepository repository;
 
     public List<DocumentosModel> consultarDocumentos() {
-        return repository.findAll();
+        return repository.findAllSinBorrar();
+    }
+
+    public List<DocumentosModel> consultarDocumentosBorrados() {
+        return repository.findAllBorrados();
     }
 
     public DocumentosModel insertarDocumento(DocumentosModel documento) {
@@ -54,27 +55,30 @@ public class DocumentosService {
         try {
             PdfWriter.getInstance(document, baos);
             document.open();
+
+            Font font = FontFactory.getFont(FontFactory.HELVETICA, 16);
         
-            // Crear una fuente personalizada
-            Font font = FontFactory.getFont(FontFactory.HELVETICA, 16, BaseColor.BLUE);
-        
-            // Crear una tabla
-            PdfPTable table = new PdfPTable(2); // 2 columnas
-            table.addCell(new PdfPCell(new Phrase("Campo", font)));
-            table.addCell(new PdfPCell(new Phrase("Valor", font)));
-            table.addCell("ID");
-            table.addCell(String.valueOf(documento.getId()));
-            table.addCell("Precio");
-            table.addCell(String.valueOf(documento.getPrecio()));
-            table.addCell("Nombre del documento");
-            table.addCell(documento.getNombreDocumento());
-            table.addCell("Descripción");
-            table.addCell(documento.getDescripcion());
-            table.addCell("Expediente");
-            table.addCell(String.valueOf(documento.getExpediente().getNig())); // Asume que ExpedientesModel tiene un método getId()
-        
-            document.add(table);
-        
+            Paragraph nombreDocumentoParagraph = new Paragraph("Nombre del documento: " + documento.getNombreDocumento(), font);
+            nombreDocumentoParagraph.setAlignment(Element.ALIGN_CENTER);
+            nombreDocumentoParagraph.setSpacingAfter(25);
+            document.add(nombreDocumentoParagraph);
+
+            Paragraph idDocumentoParagraph = new Paragraph("ID: " + String.valueOf(documento.getId()), font);
+            nombreDocumentoParagraph.setSpacingAfter(25);
+            document.add(idDocumentoParagraph);
+
+            Paragraph precioDocumentoParagraph = new Paragraph("Precio: " + String.valueOf(documento.getPrecio()), font);
+            nombreDocumentoParagraph.setSpacingAfter(25);
+            document.add(precioDocumentoParagraph);
+
+            Paragraph descripcionDocumentoParagraph = new Paragraph("Descripción: " + documento.getDescripcion(), font);
+            nombreDocumentoParagraph.setSpacingAfter(25);
+            document.add(descripcionDocumentoParagraph);
+
+            Paragraph expedienteDocumentoParagraph = new Paragraph("Expediente: " + String.valueOf(documento.getExpediente().getNig()), font);
+            nombreDocumentoParagraph.setSpacingAfter(25);
+            document.add(expedienteDocumentoParagraph);
+
             document.close();
         } catch (DocumentException e) {
             e.printStackTrace();
@@ -96,36 +100,48 @@ public class DocumentosService {
         DocumentosModel documento = repository.findById(id).orElseThrow(() -> new RuntimeException("Documento no encontrado"));
     
         String ruta = documentDir + "/documento_" + id + ".pdf";
+
+        documento.setRuta(ruta);
+
+        repository.save(documento);
     
         Document document = new Document();
-    try {
-        PdfWriter.getInstance(document, new FileOutputStream(ruta));
-        document.open();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(ruta));
+            document.open();
+        
+            
+            Font font = FontFactory.getFont(FontFactory.HELVETICA, 16);
+        
+            
+            Paragraph nombreDocumentoParagraph = new Paragraph("Nombre del documento: " + documento.getNombreDocumento(), font);
+            nombreDocumentoParagraph.setAlignment(Element.ALIGN_CENTER);
+            nombreDocumentoParagraph.setSpacingAfter(25); 
+            document.add(nombreDocumentoParagraph);
+        
+  
+            Paragraph idParagraph = new Paragraph("ID: " + String.valueOf(documento.getId()), font);
+            idParagraph.setSpacingAfter(25); 
+            document.add(idParagraph);
+        
+  
+            Paragraph precioParagraph = new Paragraph("Precio: " + String.valueOf(documento.getPrecio()), font);
+            precioParagraph.setSpacingAfter(25); 
+            document.add(precioParagraph);
 
-        // Crear una fuente personalizada
-        Font font = FontFactory.getFont(FontFactory.HELVETICA, 16, BaseColor.BLUE);
+            Paragraph descripcionParagraph = new Paragraph("Descripción: " + documento.getDescripcion(), font);
+            descripcionParagraph.setSpacingAfter(25); 
+            document.add(descripcionParagraph);
 
-        // Crear una tabla
-        PdfPTable table = new PdfPTable(2); // 2 columnas
-        table.addCell(new PdfPCell(new Phrase("Campo", font)));
-        table.addCell(new PdfPCell(new Phrase("Valor", font)));
-        table.addCell("ID");
-        table.addCell(String.valueOf(documento.getId()));
-        table.addCell("Precio");
-        table.addCell(String.valueOf(documento.getPrecio()));
-        table.addCell("Nombre del documento");
-        table.addCell(documento.getNombreDocumento());
-        table.addCell("Descripción");
-        table.addCell(documento.getDescripcion());
-        table.addCell("Expediente");
-        table.addCell(String.valueOf(documento.getExpediente().getNig())); // Asume que ExpedientesModel tiene un método getId()
+            Paragraph expedienteParagraph = new Paragraph("Expediente: " + String.valueOf(documento.getExpediente().getNig()), font);
+            expedienteParagraph.setSpacingAfter(25); 
+            document.add(expedienteParagraph);
 
-        document.add(table);
-
-        document.close();
-    } catch (DocumentException | FileNotFoundException e) {
-        e.printStackTrace();
-    }
+    
+            document.close();
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }

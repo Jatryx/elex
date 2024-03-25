@@ -28,6 +28,11 @@ public class Tipos_expedienteController {
         return servicioTipo.consultarTiposExistentes();
     }
 
+    @GetMapping("/consultarBorrados")   
+    public List<Tipos_expedienteModel> dameTiposExpedienteBorrados() {
+        return servicioTipo.consultarTiposBorrados();
+    }
+
     @PostMapping("/insertar/{materia}")
     public Tipos_expedienteModel insertarTipo(@PathVariable String materia) {
         Tipos_expedienteModel tipo = new Tipos_expedienteModel();

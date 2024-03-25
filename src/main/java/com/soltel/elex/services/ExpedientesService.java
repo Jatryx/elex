@@ -1,5 +1,6 @@
 package com.soltel.elex.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,10 @@ public class ExpedientesService {
         return repository.findAllSinBorrar();
     }
 
+    public List<ExpedientesModel> consultarExpedientesBorrados() {
+        return repository.findAllBorrados();
+    }
+
     public ExpedientesModel insertarExpediente(ExpedientesModel expediente) {
         return repository.save(expediente);
     }
@@ -31,6 +36,10 @@ public class ExpedientesService {
 
     public Optional<ExpedientesModel> obtenerExpedientePorId(int id) {
         return repository.findById(id);
+    }
+
+    public Long contarPorTipoExpediente(int tipoId) {
+        return repository.countByTipoExpediente(tipoId);
     }
 
 }

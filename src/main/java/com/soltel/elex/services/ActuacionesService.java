@@ -16,7 +16,11 @@ public class ActuacionesService {
     private IActuacionesRepository repository;
 
     public List<ActuacionesModel> consultarActuaciones() {
-        return repository.findAll();
+        return repository.findAllSinBorrar();
+    }
+
+    public List<ActuacionesModel> consultarActuacionesBorradas() {
+        return repository.findAllBorrados();
     }
 
     public ActuacionesModel insertarActuacion(ActuacionesModel actuacion) {

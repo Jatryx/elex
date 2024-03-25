@@ -2,7 +2,6 @@ package com.soltel.elex.controllers;
 
 
 
-import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soltel.elex.models.ExpedientesModel;
-import com.itextpdf.text.pdf.codec.Base64.InputStream;
 import com.soltel.elex.models.DocumentosModel;
 import com.soltel.elex.services.DocumentosService;
 import com.soltel.elex.services.ExpedientesService;
@@ -40,15 +38,19 @@ public class DocumentosController {
         return service.consultarDocumentos();
     }
 
-    @PostMapping("/insertar/{ruta}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
-    public ResponseEntity<?> insertarDocumento(String ruta, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
+    @GetMapping("/consultarBorrados")
+    public List<DocumentosModel> dameDocumentosBorrados() {
+        return service.consultarDocumentosBorrados();
+    }
+
+    @PostMapping("/insertar/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
+    public ResponseEntity<?> insertarDocumento(BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
         
         DocumentosModel documento = new DocumentosModel();
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
 
         if(expediente.isPresent())
         {
-            documento.setRuta(ruta);
             documento.setPrecio(precio);
             documento.setNombreDocumento(nombreDocumento);
             documento.setDescripcion(descripcion);
@@ -61,8 +63,8 @@ public class DocumentosController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
     }
 
-    @PutMapping("/actualizar/{id}/{ruta}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
-    public ResponseEntity<?> actualizarDocumento(int id, String ruta, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
+    @PutMapping("/actualizar/{id}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
+    public ResponseEntity<?> actualizarDocumento(int id, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
         
         Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
@@ -70,7 +72,6 @@ public class DocumentosController {
         if(documentoBuscado.isPresent() && expediente.isPresent())
         {
             DocumentosModel documento = documentoBuscado.get();
-            documento.setRuta(ruta);
             documento.setPrecio(precio);
             documento.setNombreDocumento(nombreDocumento);
             documento.setDescripcion(descripcion);

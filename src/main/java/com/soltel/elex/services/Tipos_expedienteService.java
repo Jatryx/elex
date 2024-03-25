@@ -19,6 +19,10 @@ public class Tipos_expedienteService {
         return repository.findAllSinBorrar();
     }
 
+    public List<Tipos_expedienteModel> consultarTiposBorrados() {
+        return repository.findAllBorrados();
+    }
+
     public Tipos_expedienteModel insertarTipo(Tipos_expedienteModel tipo) {
         return repository.save(tipo);
     }
