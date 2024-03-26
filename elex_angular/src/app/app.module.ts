@@ -3,13 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
-
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FormulariosTipoExpedienteComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

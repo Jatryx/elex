@@ -1,6 +1,6 @@
-import { Actuaciones } from "./actuaciones.model";
-import { Documentos } from "./documentos.model";
-import { TipoExpediente } from "./tipo-expediente.model";
+import { Actuaciones } from "../modeloActuaciones/actuaciones.model";
+import { Documentos } from "../modeloDocumentos/documentos.model";
+import { TipoExpediente } from "../modeloTipoExpediente/tipo-expediente.model";
 
 export interface Expedientes {
 

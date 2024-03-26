@@ -1,4 +1,4 @@
-import { Expedientes } from "./expedientes.model";
+import { Expedientes } from "../modeloExpedientes/expedientes.model";
 
 export interface Documentos {
 
@@ -10,4 +10,5 @@ export interface Documentos {
     borrado: boolean,
     expedientes: Expedientes,
     archivoPdf: ArrayBuffer;
+
 }

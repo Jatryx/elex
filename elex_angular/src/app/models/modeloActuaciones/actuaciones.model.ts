@@ -1,4 +1,4 @@
-import { Expedientes } from './expedientes.model';
+import { Expedientes } from "../modeloExpedientes/expedientes.model";
 
 export interface Actuaciones {
 
@@ -12,4 +12,5 @@ export interface Actuaciones {
     consejeria: string,
     borrado: boolean,
     expediente: Expedientes;
+
 }

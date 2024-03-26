@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { TipoExpediente } from '../models/tipo-expediente.model';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { TipoExpediente } from '../../models/modeloTipoExpediente/tipo-expediente.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,8 @@ import { Observable } from 'rxjs';
 export class TipoExpedienteService {
 
   private apiRoot = environment.apiRoot + '/api/tipos_expediente';
-  constructor( private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
 
   // Agregar un nuevo tipo de expediente
   addTipoExpediente(tipoExpediente: TipoExpediente): Observable<TipoExpediente> {
@@ -55,5 +55,4 @@ export class TipoExpedienteService {
     const url = `${this.apiRoot}/borrar/${id}`;
     return this.http.delete<void>(url);
   }
-
 }

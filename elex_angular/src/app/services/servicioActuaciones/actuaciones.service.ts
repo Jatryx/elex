@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { Actuaciones } from '../models/actuaciones.model';
+import { environment } from '../../../environments/environment';
+import { Actuaciones } from '../../models/modeloActuaciones/actuaciones.model';
 
 
 @Injectable({
@@ -40,5 +40,5 @@ export class ActuacionesService {
   obtenerActuacionesPorResponsableAndFecha(usuario: string, fecha: string): Observable<Actuaciones[]> {
     return this.http.get<Actuaciones[]>(`${this.apiRoot}/consultarPorUsuarioAndFecha/${usuario}/${fecha}`);
   }
-
+  
 }

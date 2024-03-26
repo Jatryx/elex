@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { Expedientes } from '../models/expedientes.model';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,6 @@ import { Expedientes } from '../models/expedientes.model';
 export class ExpedientesService {
 
   private apiRoot = environment.apiRoot + '/api/expedientes';
-
   constructor(private http: HttpClient) { }
 
   consultarExistentes(): Observable<Expedientes[]> {
