@@ -66,8 +66,8 @@ public class DocumentosController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
     }
 
-    @PutMapping("/actualizar/{id}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
-    public ResponseEntity<?> actualizarDocumento(int id, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
+    @PutMapping("/actualizar/{id}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}/{idActuacion}")
+    public ResponseEntity<?> actualizarDocumento(int id, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente, int idActuacion) {
         
         Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
@@ -81,6 +81,10 @@ public class DocumentosController {
             documento.setExpediente(expediente.get());
 
             DocumentosModel documentoGuardado = service.actualizarDocumento(documento);
+
+            service.generatePdfAndSaveToFile(id, idExpediente, idActuacion);
+            service.generatePdfAndSave(id, idExpediente, idActuacion);
+
             return ResponseEntity.ok(documentoGuardado);
         }
 
@@ -104,9 +108,9 @@ public class DocumentosController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Documento no existe");
     }
 
-    @PostMapping("/generatePdfPorBlop/{id}")
-    public ResponseEntity<Void> generatePdfAndSave(@PathVariable Integer id) {
-        service.generatePdfAndSave(id);
+    @PostMapping("/generatePdfPorBlop/{id}/{idExpediente}/{idActuacion}")
+    public ResponseEntity<Void> generatePdfAndSave(@PathVariable Integer id, @PathVariable Integer idExpediente, @PathVariable Integer idActuacion) {
+        service.generatePdfAndSave(id, idExpediente, idActuacion);
         return ResponseEntity.ok().build();
     }
 
@@ -118,9 +122,17 @@ public class DocumentosController {
                 .body(data);
     }
 
-    @PostMapping("/generatePdfPorRuta/{id}")
-    public void generatePdfAndSave1(@PathVariable Integer id) {
-        service.generatePdfAndSaveToFile(id);
+    @PostMapping("/generatePdfPorRuta/{idDocumento}/{idExpediente}/{idActuacion}")
+    public void generatePdfAndSave1(@PathVariable Integer idDocumento, @PathVariable Integer idExpediente, @PathVariable Integer idActuacion) {
+        service.generatePdfAndSaveToFile(idDocumento, idExpediente, idActuacion);
+    }
+
+    @GetMapping("/readPdfPorRuta/{idDocumento}")
+    public ResponseEntity<byte[]> readPdf1(@PathVariable Integer idDocumento) {
+        byte[] data = service.readPdfFromFile(idDocumento);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(data);
     }
 
     @GetMapping("/documentosExpediente/{idExpediente}")

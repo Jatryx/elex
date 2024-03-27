@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.soltel.elex.models.EnumExpediente;
 import com.soltel.elex.models.ExpedientesModel;
 import com.soltel.elex.models.Tipos_expedienteModel;
 import com.soltel.elex.services.ExpedientesService;
@@ -41,7 +42,7 @@ public class ExpedientesController {
     }
 
     @PostMapping("/insertar/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
-    public ResponseEntity<?> insertarExpediente(@PathVariable LocalDate fecha, @PathVariable String estado,
+    public ResponseEntity<?> insertarExpediente(@PathVariable LocalDate fecha, @PathVariable EnumExpediente estado,
     @PathVariable String opciones, @PathVariable String descripcion, @PathVariable int idTiposExpediente)
     {
         ExpedientesModel expediente = new ExpedientesModel();
@@ -56,23 +57,10 @@ public class ExpedientesController {
         String materia = tipo.getMateria();
         String nigConstruido = "";
 
-        switch (materia) {
-            case "Judicial":
-                nigConstruido = "JUD";
-                break;
-            case "Asistencia":
-                nigConstruido = "ASI";
-                break;
-            case "Informe":
-                nigConstruido = "INF";
-                break;
-            case "Moción":
-                nigConstruido = "MOC";
-                break;
-        
-            default:
-                throw new IllegalArgumentException("Materia no válida");
-        }
+        String materiaTresLetras = materia.substring(0, 3);
+        String materiaMayusculas = materiaTresLetras.toUpperCase();
+
+        nigConstruido = materiaMayusculas;
 
         int año = fecha.getYear();
 
@@ -97,7 +85,7 @@ public class ExpedientesController {
     }
 
     @PutMapping("/actualizar/{id}/{fecha}/{estado}/{opciones}/{descripcion}/{idTiposExpediente}")
-    public ResponseEntity<?> updateExpediente (@PathVariable Integer id, @PathVariable LocalDate fecha, @PathVariable String estado,
+    public ResponseEntity<?> updateExpediente (@PathVariable Integer id, @PathVariable LocalDate fecha, @PathVariable EnumExpediente estado,
     @PathVariable String opciones, @PathVariable String descripcion, @PathVariable int idTiposExpediente)
     {
         Optional<ExpedientesModel> expedienteBuscado = servicioExpediente.obtenerExpedientePorId(id);

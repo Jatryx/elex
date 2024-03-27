@@ -5,6 +5,8 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,8 +29,9 @@ public class ExpedientesModel {
     @Column (name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column (name = "estado", columnDefinition = "enum('Pendiente','Enviado','Erróneo')")
-    private String estado = "Pendiente";
+    @Column (name = "estado")
+    @Enumerated(EnumType.STRING)
+    private EnumExpediente estado;
 
     @Column (name = "opciones" , nullable = false, length = 70)
     private String opciones;
@@ -53,7 +56,7 @@ public class ExpedientesModel {
     public ExpedientesModel() {
     }
 
-    public ExpedientesModel(Integer id, String nig, LocalDate fecha, String estado,
+    public ExpedientesModel(Integer id, String nig, LocalDate fecha, EnumExpediente estado,
                             String opciones, String descripcion, Tipos_expedienteModel tipo,
                             boolean borrado) {
         this.id = id;
@@ -90,11 +93,11 @@ public class ExpedientesModel {
         this.fecha = fecha;
     }
 
-    public String getEstado() {
+    public EnumExpediente getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(EnumExpediente estado) {
         this.estado = estado;
     }
 
