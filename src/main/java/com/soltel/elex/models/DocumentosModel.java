@@ -29,7 +29,7 @@ public class DocumentosModel {
     @Column(name = "nombre_documento", nullable = false, length = 25)
     private String nombreDocumento;
 
-    @Column(name = "descripcion", nullable = false, length = 25)
+    @Column(name = "descripcion", nullable = false, length = 255)
     private String descripcion;
 
     @Column(name = "borrado", nullable = false)
