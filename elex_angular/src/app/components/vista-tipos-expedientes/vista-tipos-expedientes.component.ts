@@ -50,30 +50,29 @@ export class VistaTiposExpedientesComponent {
   }
 
   modalActualizarExpediente(id: number): void {
-  const dialogoActualizar = this.dialog.open(FormulariosTipoExpedienteComponent, {
-      width: '23%',
-      data: {
-          materia: '',
-      },
-  });
+    this.tiposExpedienteService.obtenerTipoPorId(id).subscribe(tipoExpediente => {
+      const dialogoActualizar = this.dialog.open(FormulariosTipoExpedienteComponent, {
+        width: '23%',
+        data: {
+          materia: tipoExpediente.materia,
+        },
+      })
 
       dialogoActualizar.afterClosed().subscribe((result) => {
-
         if (result) {
-          this.tiposExpedienteService.updateTipoExpediente(id, result.materia).subscribe(
-            (tipoExpedienteActualizado) => {
-              this.dataSource.push(tipoExpedienteActualizado);
-              this.dataSource = [...this.dataSource];
-              window.location.reload();
-            },
-            (error) => {
-              console.error('Error al actualizar tipo de expediente:', error);
-
-            }
-          );
-        }
-      });
-    };
+          this.tiposExpedienteService
+            .updateTipoExpediente(
+              id,
+              result.materia,
+            )
+            .subscribe((tipoExpediente) => {
+              this.dataSource.push(tipoExpediente)
+              this.dataSource = [...this.dataSource]
+            })
+    }
+  })
+    })
+  }
 
 
   borrarExpediente(id: number): void {
