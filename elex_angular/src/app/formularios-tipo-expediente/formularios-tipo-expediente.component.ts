@@ -10,8 +10,8 @@ export class FormulariosTipoExpedienteComponent {
 
   constructor(
   public dialogRef: MatDialogRef<FormulariosTipoExpedienteComponent>,
-  @Inject(MAT_DIALOG_DATA)
-  public inserccion: { materia: string; },
+    @Inject(MAT_DIALOG_DATA)
+    public inserccion: { materia: string; },
   ) {}
 
   onNoClick(): void {
