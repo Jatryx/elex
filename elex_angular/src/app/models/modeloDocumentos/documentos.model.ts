@@ -8,7 +8,7 @@ export interface Documentos {
     nombreDocumento: string,
     descripcion: string,
     borrado: boolean,
-    expedientes: Expedientes,
+    idExpediente: Expedientes,
     archivoPdf: ArrayBuffer;
 
 }

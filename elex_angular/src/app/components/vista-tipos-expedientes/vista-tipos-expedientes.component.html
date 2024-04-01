@@ -1,0 +1,32 @@
+<div class="demo-button-container">
+    <button mat-raised-button (click)="modalInsertarTipoExpediente()" class="demo-button btn">
+      Añadir Tipo de Expediente
+    </button>
+</div>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+  
+ 
+    <ng-container matColumnDef="materia">
+      <th mat-header-cell *matHeaderCellDef>materia</th>
+      <td mat-cell *matCellDef="let element">{{element.materia}}</td>
+    </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="modalActualizarExpediente(element.nig)">Actualizar</button>
+          
+          <button mat-button (click)="borrarExpediente(element.id)">Borrar</button>
+        </td>
+      </ng-container>
+   
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

@@ -63,4 +63,13 @@ public class Tipos_expedienteController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/obtenerPorId/{id}")
+    public ResponseEntity<?> obtenerTipoPorId(@PathVariable int id) {
+        Optional<Tipos_expedienteModel> tipo = servicioTipo.obtenerTipoPorId(id);
+        if (tipo.isPresent()) {
+            return ResponseEntity.ok(tipo.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo no encontrado");
+        }
+    }
 }

@@ -4,12 +4,16 @@ package com.soltel.elex.controllers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -47,8 +51,7 @@ public class DocumentosController {
     }
 
     @PostMapping("/insertar/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}")
-    public ResponseEntity<?> insertarDocumento(BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente) {
-        
+    public ResponseEntity<?> insertarDocumento(@PathVariable BigDecimal precio,@PathVariable String nombreDocumento,@PathVariable String descripcion,@PathVariable Integer idExpediente) {
         DocumentosModel documento = new DocumentosModel();
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
 
@@ -67,7 +70,7 @@ public class DocumentosController {
     }
 
     @PutMapping("/actualizar/{id}/{precio}/{nombreDocumento}/{descripcion}/{idExpediente}/{idActuacion}")
-    public ResponseEntity<?> actualizarDocumento(int id, BigDecimal precio, String nombreDocumento, String descripcion, int idExpediente, int idActuacion) {
+    public ResponseEntity<?> actualizarDocumento(@PathVariable int id,@PathVariable BigDecimal precio,@PathVariable String nombreDocumento,@PathVariable String descripcion,@PathVariable int idExpediente,@PathVariable int idActuacion) {
         
         Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
@@ -92,7 +95,7 @@ public class DocumentosController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarDocumento(int id) {
+    public ResponseEntity<?> eliminarDocumento(@PathVariable int id) {
         
         Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
 
@@ -144,4 +147,31 @@ public class DocumentosController {
     public List<DocumentosModel> dameDocumentosPorNombre(@PathVariable String nombreDocumento) {
         return service.obtenerNombreDocumento(nombreDocumento);
     }
+
+    @GetMapping("/descargar/{idDocumento}")
+    public ResponseEntity<?> descargarArchivo(@PathVariable Integer idDocumento) {
+        try {
+            String rutaArchivo = service.obtenerRutaArchivo(idDocumento);
+
+            
+            Resource resource = new FileSystemResource(rutaArchivo);
+
+
+            if (resource.exists() || resource.isReadable()) {
+                return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=" + resource.getFilename())
+                .body(resource);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se pudo leer el archivo " + idDocumento);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al descargar el archivo: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/obtnerPorId/{id}")
+    public ResponseEntity<?> obtenerDocumentoPorId(@PathVariable Integer id) {
+        return ResponseEntity.ok(service.obtenerDocumentoPorId(id));
+    }
+    
 }

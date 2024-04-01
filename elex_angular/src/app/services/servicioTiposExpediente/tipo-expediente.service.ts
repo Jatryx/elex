@@ -9,21 +9,14 @@ import { TipoExpediente } from '../../models/modeloTipoExpediente/tipo-expedient
 })
 export class TipoExpedienteService {
 
-  private apiRoot = environment.apiRoot + '/api/tipos_expediente';
+  private apiRoot = 'http://localhost:8101/api/tipos_expediente';
   constructor(private http: HttpClient) { }
 
 
   // Agregar un nuevo tipo de expediente
-  addTipoExpediente(tipoExpediente: TipoExpediente): Observable<TipoExpediente> {
-    let nuevoTipoExpediente: TipoExpediente = {
-      id: 0,
-      materia: tipoExpediente.materia,
-      borrado: false,
-      expedientes: []
-    };
-  
-    const url = `${this.apiRoot}/insertar/${nuevoTipoExpediente.materia}`;
-    return this.http.post<TipoExpediente>(url, nuevoTipoExpediente);
+  addTipoExpediente(materia: string): Observable<TipoExpediente> {
+    const ruta = `${this.apiRoot}/insertar/${materia}`;
+    return this.http.post<TipoExpediente>(ruta, {});
   }
 
   // Obtener todos los tipos de expediente existentes
@@ -38,21 +31,25 @@ export class TipoExpedienteService {
     return this.http.get<TipoExpediente[]>(url);
   }
 
+  // Obtener todos los tipos de expediente existentes
+  getTiposExpediente(): Observable<TipoExpediente[]> {
+    const url = `${this.apiRoot}/consultarExistentes`;
+    return this.http.get<TipoExpediente[]>(url);
+  }
+
   // Actualizar un tipo de expediente
-  updateTipoExpediente(tipoExpediente: TipoExpediente): Observable<TipoExpediente> {
-    let tipoExpedienteActualizado: TipoExpediente = {
-      id: tipoExpediente.id,
-      materia: tipoExpediente.materia,
-      borrado: tipoExpediente.borrado,
-      expedientes: []
-    };
-    const url = `${this.apiRoot}/actualizar/${tipoExpediente.id}/${tipoExpediente.materia}`;
-    return this.http.put<TipoExpediente>(url, tipoExpediente);
+  updateTipoExpediente(id: number, materia: string): Observable<TipoExpediente> {
+    const url = `${this.apiRoot}/actualizar/${id}/${materia}`;
+    return this.http.put<TipoExpediente>(url, {});
   }
 
   // Borrado lógico de un tipo de expediente
   borrarTipo(id: number): Observable<void> {
     const url = `${this.apiRoot}/borrar/${id}`;
     return this.http.delete<void>(url);
+  }
+
+  obtenerTipoPorId(id: number): Observable<TipoExpediente> {
+    return this.http.get<TipoExpediente>(`${this.apiRoot}/obtenerPorId/${id}`);
   }
 }

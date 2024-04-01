@@ -323,4 +323,10 @@ public class DocumentosService {
             throw new RuntimeException("Ocurrió un error al leer el archivo: " + e.getMessage(), e);
         }
     }
+
+    public String obtenerRutaArchivo(Integer idDocumento) {
+        DocumentosModel documento = repository.findById(idDocumento).orElseThrow(() -> new RuntimeException("Documento no encontrado"));
+        String filePath = documento.getRuta(); 
+        return filePath;
+    }
 }

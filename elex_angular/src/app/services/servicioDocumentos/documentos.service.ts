@@ -9,7 +9,7 @@ import { Documentos } from '../../models/modeloDocumentos/documentos.model';
 })
 export class DocumentosService {
 
-  private apiRoot = environment.apiRoot + '/api/documentos';
+  private apiRoot = 'http://localhost:8101/api/documentos';
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +22,7 @@ export class DocumentosService {
   }
 
   insertarDocumento(precio: number, nombreDocumento: string, descripcion: string, idExpediente: number): Observable<Documentos> {
+    console.log(`${this.apiRoot}/insertar/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}`)
     return this.http.post<Documentos>(`${this.apiRoot}/insertar/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}`, {});
   }
 
@@ -51,5 +52,10 @@ export class DocumentosService {
 
   obtenerNombreDocumento(nombreDocumento: string): Observable<Documentos[]> {
     return this.http.get<Documentos[]>(`${this.apiRoot}/documentosNombre/${nombreDocumento}`);
+  }
+
+  obtenerDocumentoPorId(id: number): Observable<Documentos> {
+    console.log(`${this.apiRoot}/obtenerPorId/${id}`);
+    return this.http.get<Documentos>(`${this.apiRoot}/obtenerPorId/${id}`);
   }
 }

@@ -9,7 +9,7 @@ import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
 })
 export class ExpedientesService {
 
-  private apiRoot = environment.apiRoot + '/api/expedientes';
+  private apiRoot = 'http://localhost:8101/api/expedientes';
   constructor(private http: HttpClient) { }
 
   consultarExistentes(): Observable<Expedientes[]> {
@@ -20,7 +20,8 @@ export class ExpedientesService {
     return this.http.get<Expedientes[]>(`${this.apiRoot}/consultarBorrados`);
   }
 
-  insertarExpediente(fecha: string, estado: string, opciones: string, descripcion: string, idTiposExpediente: number): Observable<Expedientes> {
+  insertarExpediente(fecha: Date, estado: string, opciones: string, descripcion: string, idTiposExpediente: number): Observable<Expedientes> {
+    const ruta = `${this.apiRoot}/insertar/${fecha}/${estado}/${opciones}/${descripcion}/${idTiposExpediente}`;
     return this.http.post<Expedientes>(`${this.apiRoot}/insertar/${fecha}/${estado}/${opciones}/${descripcion}/${idTiposExpediente}`, {});
   }
 

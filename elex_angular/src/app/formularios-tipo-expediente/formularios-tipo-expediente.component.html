@@ -1,0 +1,10 @@
+
+  <mat-form-field>
+    <mat-label>materia</mat-label>
+    <textarea matInput [(ngModel)] = "inserccion.materia"></textarea>
+  </mat-form-field>
+  <section mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button [mat-dialog-close]="inserccion" cdkFocusInitial>Aceptar</button>
+  </section>
+  

@@ -1,0 +1,30 @@
+<mat-form-field>
+  <mat-label>Fecha</mat-label>
+  <input matInput [(ngModel)]="inserccion.fecha" type="date" />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Estado</mat-label>
+  <mat-select [(value)]="inserccion.estado">
+    <mat-option value="Pendiente">Pendiente</mat-option>
+    <mat-option value="Enviado">Enviado</mat-option>
+    <mat-option value="Erróneo">Erróneo</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Descripcion</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.descripcion"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Opciones</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.opciones"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Tipo</mat-label>
+  <mat-select [(value)]="inserccion.tipo">
+    <mat-option *ngFor="let tipo of tiposExpediente" [value]="tipo.id">{{tipo.materia}}</mat-option>
+</mat-select>
+</mat-form-field>
+<section mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="inserccion" cdkFocusInitial>Aceptar</button>
+</section>

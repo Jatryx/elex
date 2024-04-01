@@ -10,7 +10,7 @@ import { Actuaciones } from '../../models/modeloActuaciones/actuaciones.model';
 })
 export class ActuacionesService {
 
-  private apiRoot = environment.apiRoot + '/api/actuaciones';
+  private apiRoot = 'http://localhost:8101/api/actuaciones';
   constructor( private http: HttpClient) { }
 
   consultarExistentes(): Observable<Actuaciones[]> {
@@ -21,11 +21,11 @@ export class ActuacionesService {
     return this.http.get<Actuaciones[]>(`${this.apiRoot}/consultarBorradas`);
   }
 
-  insertarActuacion(observaciones: string, finalizado: boolean, fecha: string, usuario: string, responsable1: string, responsable2: string, consejeria: string, idExpediente: number): Observable<Actuaciones> {
+  insertarActuacion(observaciones: string, finalizado: boolean, fecha: Date, usuario: string, responsable1: string, responsable2: string, consejeria: string, idExpediente: number): Observable<Actuaciones> {
     return this.http.post<Actuaciones>(`${this.apiRoot}/insertar/${observaciones}/${finalizado}/${fecha}/${usuario}/${responsable1}/${responsable2}/${consejeria}/${idExpediente}`, {});
   }
 
-  actualizarActuacion(id: number, observaciones: string, finalizado: boolean, fecha: string, usuario: string, responsable1: string, responsable2: string, consejeria: string, idExpediente: number): Observable<Actuaciones> {
+  actualizarActuacion(id: number, observaciones: string, finalizado: boolean, fecha: Date, usuario: string, responsable1: string, responsable2: string, consejeria: string, idExpediente: number): Observable<Actuaciones> {
     return this.http.put<Actuaciones>(`${this.apiRoot}/actualizar/${id}/${observaciones}/${finalizado}/${fecha}/${usuario}/${responsable1}/${responsable2}/${consejeria}/${idExpediente}`, {});
   }
 

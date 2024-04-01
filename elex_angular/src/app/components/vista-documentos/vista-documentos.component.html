@@ -1,0 +1,48 @@
+<div class="demo-button-container">
+    <button mat-raised-button (click)="modalInsertarDocumentos()" class="demo-button btn">
+      Añadir Documento
+    </button>
+</div>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>id</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombreDocumento">
+      <th mat-header-cell *matHeaderCellDef>nombreDocumento</th>
+      <td mat-cell *matCellDef="let element">{{element.nombreDocumento}}</td>
+    </ng-container>
+  
+ 
+    <ng-container matColumnDef="precio">
+      <th mat-header-cell *matHeaderCellDef>precio</th>
+      <td mat-cell *matCellDef="let element">{{element.precio}}€</td>
+    </ng-container>
+  
+  
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>descripcion</th>
+      <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="expedientes">
+        <th mat-header-cell *matHeaderCellDef>expedientes</th>
+        <td mat-cell *matCellDef="let element">{{element.expediente.nig}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="modalActualizarDocumentos(element.id)">Actualizar</button>
+          
+          <button mat-button (click)="borrarDocumentos(element.id)">Borrar</button>
+        </td>
+      </ng-container>
+   
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,8 @@ public class ActuacionesController {
     
 
     @PostMapping("/insertar/{observaciones}/{finalizado}/{fecha}/{usuario}/{responsable1}/{responsable2}/{consejeria}/{idExpediente}")
-    public ResponseEntity<?> insertarActuacion(String observaciones, boolean finalizado, LocalDate fecha, String usuario, String responsable1, String responsable2, String consejeria, int idExpediente){
+    public ResponseEntity<?> insertarActuacion(@PathVariable String observaciones,@PathVariable boolean finalizado,@PathVariable LocalDate fecha,@PathVariable String usuario, 
+    @PathVariable String responsable1,@PathVariable String responsable2,@PathVariable String consejeria,@PathVariable int idExpediente){
 
         ActuacionesModel actuacion = new ActuacionesModel();
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
@@ -64,7 +66,8 @@ public class ActuacionesController {
     }
 
     @PutMapping("/actualizar/{id}/{observaciones}/{finalizado}/{fecha}/{usuario}/{responsable1}/{responsable2}/{consejeria}/{idExpediente}")
-    public ResponseEntity<?> actualizarActuacion(int id, String observaciones, boolean finalizado, LocalDate fecha, String usuario, String responsable1, String responsable2, String consejeria, int idExpediente) {
+    public ResponseEntity<?> actualizarActuacion(@PathVariable int id,@PathVariable String observaciones,@PathVariable boolean finalizado,@PathVariable LocalDate fecha,
+    @PathVariable String usuario,@PathVariable String responsable1,@PathVariable String responsable2,@PathVariable String consejeria,@PathVariable int idExpediente) {
         ActuacionesModel actuacion = new ActuacionesModel();
         Optional<ExpedientesModel> expediente = expedienteService.obtenerExpedientePorId(idExpediente);
 
@@ -87,7 +90,7 @@ public class ActuacionesController {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarActuacion(int id) {
+    public ResponseEntity<?> eliminarActuacion(@PathVariable int id) {
         Optional<ActuacionesModel> actuacionBuscada = service.obtenerActuacionPorId(id);
 
         if (actuacionBuscada.isPresent()) {
@@ -103,12 +106,12 @@ public class ActuacionesController {
     }
     
     @GetMapping("/consultarPorExpediente/{idExpediente}")
-    public List<ActuacionesModel> dameActuacionesPorExpediente(int idExpediente) {
+    public List<ActuacionesModel> dameActuacionesPorExpediente(@PathVariable int idExpediente) {
         return service.obtenerTodosLasActuacionesExpediente(idExpediente);
     }
 
     @GetMapping("/consultarPorUsuarioAndFecha/{usuario}/{fecha}")
-    public List<ActuacionesModel> dameActuacionesPorResponsableAndFecha(String usuario, LocalDate fecha) {
+    public List<ActuacionesModel> dameActuacionesPorResponsableAndFecha(@PathVariable String usuario,@PathVariable LocalDate fecha) {
         return service.obtenerActuacionesPorResponsableAndFecha(usuario, fecha);
     }
 }

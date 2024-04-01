@@ -1,0 +1,22 @@
+<section>
+    <div class="container">
+      <div class="heading">Formulario Actuaciones</div>
+      <form (ngSubmit)="insertarNuevoActuacion()" #form="ngForm" class="form">
+        <input required="" class="input" type="text" name="observaciones" id="observaciones" [(ngModel)]="actuaciones.observaciones">
+        <input class="input" type="checkbox" name="finalizado" id="finalizado" [(ngModel)]="actuaciones.finalizada">
+        <input required="" class="input date" type="date" name="fecha" id="fecha" [(ngModel)]="actuaciones.fecha">
+        <input required="" class="input" type="text" name="usuario" id="usuario" [(ngModel)]="actuaciones.usuario">
+        <input required="" class="input" type="text" name="responsable1" id="responsable1" [(ngModel)]="actuaciones.responsable1">
+        <input required="" class="input" type="text" name="responsable2" id="responsable2" [(ngModel)]="actuaciones.responsable2">
+        <input required="" class="input" type="text" name="consejeria" id="consejeria" [(ngModel)]="actuaciones.consejeria">
+        <select class="input" name="tipo" id="tipo" [(ngModel)]="actuaciones.expediente">
+          <option *ngFor="let expedientes of expediente" [value]="expedientes.id">{{expedientes.nig}}</option>
+        </select>
+        <button type="submit" class="btn login-button">Crear Actuacion</button>
+      </form>
+    </div>
+  </section>
+  
+  <section *ngIf="mensaje" class="alert alert-success">
+    {{ mensaje }}
+  </section>
