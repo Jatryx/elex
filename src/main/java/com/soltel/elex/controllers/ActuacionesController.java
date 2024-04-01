@@ -114,4 +114,15 @@ public class ActuacionesController {
     public List<ActuacionesModel> dameActuacionesPorResponsableAndFecha(@PathVariable String usuario,@PathVariable LocalDate fecha) {
         return service.obtenerActuacionesPorResponsableAndFecha(usuario, fecha);
     }
+
+    @GetMapping("/consultarPorId/{id}")
+    public ResponseEntity<?> dameActuacionPorId(@PathVariable int id) {
+        Optional<ActuacionesModel> actuacion = service.obtenerActuacionPorId(id);
+
+        if (actuacion.isPresent()) {
+            return ResponseEntity.ok(actuacion.get());
+        }
+
+        return ResponseEntity.badRequest().body("Actuación no existe");
+    }
 }

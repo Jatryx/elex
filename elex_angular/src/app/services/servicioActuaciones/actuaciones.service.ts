@@ -40,5 +40,9 @@ export class ActuacionesService {
   obtenerActuacionesPorResponsableAndFecha(usuario: string, fecha: string): Observable<Actuaciones[]> {
     return this.http.get<Actuaciones[]>(`${this.apiRoot}/consultarPorUsuarioAndFecha/${usuario}/${fecha}`);
   }
+
+  obtenerActuacionesPorId(id: number): Observable<Actuaciones> {
+    return this.http.get<Actuaciones>(`${this.apiRoot}/consultarPorId/${id}`);
+  }
   
 }

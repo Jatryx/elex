@@ -9,6 +9,7 @@ import { VistaExpedientesComponent } from './components/vista-expedientes/vista-
 import { VistaDocumentosComponent } from './components/vista-documentos/vista-documentos.component';
 import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
 import { VistaTiposExpedientesComponent } from './components/vista-tipos-expedientes/vista-tipos-expedientes.component';
+import { VistaActuacionesComponent } from './components/vista-actuaciones/vista-actuaciones.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,14 @@ const routes: Routes = [
     data:
     { bTitle: 'Vista de Tipos de Expedientes'}
     // Ejemplo del endpoint: http://localhost:4200/vista-tipos-expedientes
+  },
+
+  {
+    path: 'vista-actuaciones',
+    component: VistaActuacionesComponent,
+    data:
+    { bTitle: 'Vista de Actuaciones'}
+    // Ejemplo del endpoint: http://localhost:4200/vista-actuaciones
   },
 
   {

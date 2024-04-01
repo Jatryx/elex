@@ -1,22 +1,41 @@
-<section>
-    <div class="container">
-      <div class="heading">Formulario Actuaciones</div>
-      <form (ngSubmit)="insertarNuevoActuacion()" #form="ngForm" class="form">
-        <input required="" class="input" type="text" name="observaciones" id="observaciones" [(ngModel)]="actuaciones.observaciones">
-        <input class="input" type="checkbox" name="finalizado" id="finalizado" [(ngModel)]="actuaciones.finalizada">
-        <input required="" class="input date" type="date" name="fecha" id="fecha" [(ngModel)]="actuaciones.fecha">
-        <input required="" class="input" type="text" name="usuario" id="usuario" [(ngModel)]="actuaciones.usuario">
-        <input required="" class="input" type="text" name="responsable1" id="responsable1" [(ngModel)]="actuaciones.responsable1">
-        <input required="" class="input" type="text" name="responsable2" id="responsable2" [(ngModel)]="actuaciones.responsable2">
-        <input required="" class="input" type="text" name="consejeria" id="consejeria" [(ngModel)]="actuaciones.consejeria">
-        <select class="input" name="tipo" id="tipo" [(ngModel)]="actuaciones.expediente">
-          <option *ngFor="let expedientes of expediente" [value]="expedientes.id">{{expedientes.nig}}</option>
-        </select>
-        <button type="submit" class="btn login-button">Crear Actuacion</button>
-      </form>
-    </div>
-  </section>
-  
-  <section *ngIf="mensaje" class="alert alert-success">
-    {{ mensaje }}
-  </section>
+<mat-form-field>
+  <mat-label>Fecha</mat-label>
+  <input matInput [(ngModel)]="inserccion.fecha" type="date" />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Finalizado</mat-label>
+  <mat-select [(value)]="inserccion.finalizada">
+    <mat-option [value]="true">Finalizado</mat-option>
+    <mat-option [value]="false">Sin finalizar</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>observaciones</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.observaciones"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>usuario</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.usuario"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>responsable1</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.responsable1"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>responsable2</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.responsable2"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>consejeria</mat-label>
+  <textarea matInput [(ngModel)] = "inserccion.consejeria"></textarea>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Tipo</mat-label>
+  <mat-select [(value)]="inserccion.expediente">
+    <mat-option *ngFor="let tipo of expedientes" [value]="tipo.id">{{tipo.nig}}</mat-option>
+</mat-select>
+</mat-form-field>
+<section mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="inserccion" cdkFocusInitial>Aceptar</button>
+</section>
