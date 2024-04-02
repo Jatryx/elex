@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { Actuaciones } from '../../models/modeloActuaciones/actuaciones.model';
 import { ActuacionesService } from '../../services/servicioActuaciones/actuaciones.service';
 import { FormulariosActuacionesComponent } from '../formularios-actuaciones/formularios-actuaciones.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vista-actuaciones',
@@ -60,6 +61,7 @@ export class VistaActuacionesComponent {
     })
   }
 
+  isLoading = false;
   modalActualizarActuacion(id: number){
     this.actuacionesService.obtenerActuacionesPorId(id).subscribe(actuacion => {
       console.log(actuacion.finalizada);
@@ -94,6 +96,19 @@ export class VistaActuacionesComponent {
             .subscribe((actuacion) => {
               this.dataSource.push(actuacion)
               this.dataSource = [...this.dataSource]
+              Swal.fire({
+                title: 'Actuaciones actualizada',
+                icon: 'success'
+              }).then(() => {
+                this.isLoading = true;
+                setTimeout(() => {
+                  this.isLoading = false;
+                }, 1000);
+              });
+            }, error => {
+              setTimeout(() => {
+                this.isLoading = false;
+              }, 1000);
             })
         }
       })

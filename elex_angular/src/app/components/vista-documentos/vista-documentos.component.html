@@ -1,9 +1,9 @@
+<div *ngIf="!isLoading; else loading">
 <div class="demo-button-container">
     <button mat-raised-button (click)="modalInsertarDocumentos()" class="demo-button btn">
       Añadir Documento
     </button>
 </div>
-<div *ngIf="!isLoading; else loading">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
     <ng-container matColumnDef="id">
@@ -52,3 +52,4 @@
     <mat-spinner></mat-spinner>
   </div>
 </ng-template>
+

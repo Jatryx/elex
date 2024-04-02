@@ -24,7 +24,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatIconModule} from '@angular/material/icon'
+import {MatIconModule} from '@angular/material/icon';
+
 
 
 @NgModule({

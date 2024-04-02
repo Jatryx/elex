@@ -1,9 +1,10 @@
-<div class="demo-button-container">
-    <button mat-raised-button (click)="modalInsertarTipoExpediente()" class="demo-button btn">
-      Añadir Tipo de Expediente
-    </button>
-</div>
-  
+<div *ngIf="!isLoading; else loading">
+  <div class="demo-button-container">
+      <button mat-raised-button (click)="modalInsertarTipoExpediente()" class="demo-button btn">
+        Añadir Tipo de Expediente
+      </button>
+  </div>
+
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
     <ng-container matColumnDef="id">
@@ -30,3 +31,9 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
+<ng-template #loading>
+  <div class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

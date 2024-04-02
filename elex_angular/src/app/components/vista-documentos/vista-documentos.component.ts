@@ -4,6 +4,7 @@ import { Documentos } from '../../models/modeloDocumentos/documentos.model';
 import { FormulariosExpedientesComponent } from '../formularios-expedientes/formularios-expedientes.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormulariosDocumentosComponent } from '../formularios-documentos/formularios-documentos.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vista-documentos',
@@ -96,14 +97,21 @@ export class VistaDocumentosComponent {
                 this.dataSource.push(expediente);
               }
               this.dataSource = [...this.dataSource];
+
+              Swal.fire({
+              title: 'Expediente actualizado',
+              icon: 'success'
+            }).then(() => {
+              this.isLoading = true;
               setTimeout(() => {
                 this.isLoading = false;
               }, 1000);
-            }, error => {
-              setTimeout(() => {
-                this.isLoading = false;
-              }, 1000);
-            })
+            });
+          }, error => {
+            setTimeout(() => {
+              this.isLoading = false;
+            }, 1000);
+          })
         }
       })
     });

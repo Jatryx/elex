@@ -3,6 +3,7 @@ import { ExpedientesService } from '../../services/servicioExpedientes/expedient
 import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
 import { FormulariosExpedientesComponent } from '../formularios-expedientes/formularios-expedientes.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vista-expedientes',
@@ -53,7 +54,8 @@ export class VistaExpedientesComponent implements OnInit{
         }
     })
 }
- 
+isLoading = false;
+
 modalActualizarExpediente(nig: string): void {
   this.expedientesService.consultarPorNig(nig).subscribe(expediente => {
     const dialogoActualizar = this.dialog.open(FormulariosExpedientesComponent, {
@@ -70,6 +72,7 @@ modalActualizarExpediente(nig: string): void {
     });
     dialogoActualizar.afterClosed().subscribe((result) => {
       if (result) {
+        this.isLoading = true;
           this.expedientesService
               .updateExpediente(
                   result.id,
@@ -80,11 +83,23 @@ modalActualizarExpediente(nig: string): void {
                   result.tipo,
               )
               .subscribe((expediente) => {
-                  this.dataSource.push(expediente)
-                  this.dataSource = [...this.dataSource]
-                  window.location.reload();
-              })
-      }
+                  this.dataSource.push(expediente);
+                  this.dataSource = [...this.dataSource];
+                  Swal.fire({
+                    title: 'Expediente actualizado',
+                    icon: 'success'
+                  }).then(() => {
+                    this.isLoading = true;
+                  setTimeout(() => {
+                    this.isLoading = false;
+                  }, 1000);
+                });
+                }, error => {
+                  setTimeout(() => {
+                    this.isLoading = false;
+                  }, 1000);
+                })
+              }
   })
   });
   
