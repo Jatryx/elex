@@ -169,7 +169,7 @@ public class DocumentosController {
         }
     }
 
-    @GetMapping("/obtnerPorId/{id}")
+    @GetMapping("/obtenerPorId/{id}")
     public ResponseEntity<?> obtenerDocumentoPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(service.obtenerDocumentoPorId(id));
     }

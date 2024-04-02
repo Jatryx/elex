@@ -26,8 +26,8 @@ export class DocumentosService {
     return this.http.post<Documentos>(`${this.apiRoot}/insertar/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}`, {});
   }
 
-  actualizarDocumento(id: number, precio: number, nombreDocumento: string, descripcion: string, idExpediente: number): Observable<Documentos> {
-    return this.http.put<Documentos>(`${this.apiRoot}/actualizar/${id}/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}`, {});
+  actualizarDocumento(id: number, precio: number, nombreDocumento: string, descripcion: string, idExpediente: number, idActuaciones: number): Observable<Documentos> {
+    return this.http.put<Documentos>(`${this.apiRoot}/actualizar/${id}/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}/${idActuaciones}`, {});
   }
 
   eliminarDocumento(id: number): Observable<Documentos> {

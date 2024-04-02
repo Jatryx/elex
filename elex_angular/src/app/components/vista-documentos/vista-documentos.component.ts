@@ -27,7 +27,8 @@ export class VistaDocumentosComponent {
 
   modalInsertarDocumentos(): void {
     const dialogoInsertar = this.dialog.open(FormulariosDocumentosComponent, {
-        width: '23%',
+      width: '17%',
+      height: '60%',
         data: {
             precio: 0,
             nombreDocumento: '',
@@ -55,45 +56,56 @@ export class VistaDocumentosComponent {
   }
 
 
+  isLoading = false;
+
   modalActualizarDocumentos(id: number): void {
-    console.log(Number(id));
     this.documentosService.obtenerDocumentoPorId(id).subscribe(documentos => {
-      if (documentos && documentos.idExpediente) {
-        const dialogoActualizar = this.dialog.open(FormulariosDocumentosComponent, {
-          width: '23%',
-          data: {
-            id: documentos.id,
-            precio: documentos.precio,
-            nombreDocumento: documentos.nombreDocumento,
-            descripcion: documentos.descripcion,
-            expedientes: documentos.idExpediente.id,
-          },
-        });
+      console.log(documentos.expediente);
+      const dialogoActualizar = this.dialog.open(FormulariosDocumentosComponent, {
+        width: '17%',
+        height: '60%',
+        data: {
+          id: documentos.id,
+          precio: documentos.precio,
+          nombreDocumento: documentos.nombreDocumento,
+          descripcion: documentos.descripcion,
+          expedientes: documentos.expediente.id,
+          mostrarCampoActuaciones: true,
+        },
+      });
   
-        dialogoActualizar.afterClosed().subscribe((result) => {
-          if (result) {
-            this.documentosService
-              .actualizarDocumento(
-                result.id,
-                result.precio,
-                result.nombreDocumento,
-                result.descripcion,
-                result.expedientes,
-              )
-              .subscribe((expediente) => {
-                const index = this.dataSource.findIndex(d => d.id === expediente.id);
-                if (index > -1) {
-                  this.dataSource[index] = expediente;
-                } else {
-                  this.dataSource.push(expediente);
-                }
-                this.dataSource = [...this.dataSource];
-              })
-          }
-        })
-      } else {
-        console.log('documentos o documentos.idExpediente es undefined');
-      }
+      dialogoActualizar.afterClosed().subscribe((result) => {
+        if (result) {
+          console.log(result);
+          console.log(result.actuaciones)
+          this.isLoading = true;
+          this.documentosService
+            .actualizarDocumento(
+              result.id,
+              result.precio,
+              result.nombreDocumento,
+              result.descripcion,
+              result.expedientes,
+              result.actuaciones
+            )
+            .subscribe((expediente) => {
+              const index = this.dataSource.findIndex(d => d.id === expediente.id);
+              if (index > -1) {
+                this.dataSource[index] = expediente;
+              } else {
+                this.dataSource.push(expediente);
+              }
+              this.dataSource = [...this.dataSource];
+              setTimeout(() => {
+                this.isLoading = false;
+              }, 1000);
+            }, error => {
+              setTimeout(() => {
+                this.isLoading = false;
+              }, 1000);
+            })
+        }
+      })
     });
   }
 

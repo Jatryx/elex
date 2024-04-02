@@ -25,7 +25,8 @@ export class VistaExpedientesComponent implements OnInit{
 
   modalInsertarExpediente(): void {
     const dialogoInsertar = this.dialog.open(FormulariosExpedientesComponent, {
-        width: '23%',
+        width: '15%',
+        height: '67%',
         data: {
             estado: '',
             fecha: new Date(),
@@ -34,7 +35,7 @@ export class VistaExpedientesComponent implements OnInit{
             tipo: false,
         },
     })
-
+    
     dialogoInsertar.afterClosed().subscribe((result) => {
         if (result) {
             this.expedientesService
@@ -56,7 +57,8 @@ export class VistaExpedientesComponent implements OnInit{
 modalActualizarExpediente(nig: string): void {
   this.expedientesService.consultarPorNig(nig).subscribe(expediente => {
     const dialogoActualizar = this.dialog.open(FormulariosExpedientesComponent, {
-      width: '23%',
+      width: '15%',
+      height: '67%',
       data: {
         id: expediente.id,
         estado: expediente.estado,

@@ -27,7 +27,8 @@ export class VistaTiposExpedientesComponent {
 
   modalInsertarTipoExpediente(): void {
     const dialogoInsertar = this.dialog.open(FormulariosTipoExpedienteComponent, {
-        width: '23%',
+        width: '14%',
+        height: '20%',
         data: {
             materia: '',
         },
@@ -52,7 +53,8 @@ export class VistaTiposExpedientesComponent {
   modalActualizarExpediente(id: number): void {
     this.tiposExpedienteService.obtenerTipoPorId(id).subscribe(tipoExpediente => {
       const dialogoActualizar = this.dialog.open(FormulariosTipoExpedienteComponent, {
-        width: '23%',
+        width: '14%',
+        height: '20%',
         data: {
           materia: tipoExpediente.materia,
         },

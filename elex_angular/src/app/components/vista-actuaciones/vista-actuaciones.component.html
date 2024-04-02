@@ -58,9 +58,9 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let element">
-          <button mat-button (click)="modalActualizarActuacion(element.id)">Actualizar</button>
+          <button mat-button (click)="modalActualizarActuacion(element.id)"><mat-icon>description</mat-icon></button>
           
-          <button mat-button (click)="borrarActuacion(element.id)">Borrar</button>
+          <button mat-button (click)="borrarActuacion(element.id)"><mat-icon>delete_outline</mat-icon></button>
         </td>
       </ng-container>
    

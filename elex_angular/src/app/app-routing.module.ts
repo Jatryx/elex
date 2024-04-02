@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormulariosExpedientesComponent } from './components/formularios-expedientes/formularios-expedientes.component';
 import { LoginComponent } from './components/login/login.component';
-import { FormulariosDocumentosComponent } from './components/formularios-documentos/formularios-documentos.component';
-import { FormulariosActuacionesComponent } from './components/formularios-actuaciones/formularios-actuaciones.component';
 import { VistaExpedientesComponent } from './components/vista-expedientes/vista-expedientes.component';
 import { VistaDocumentosComponent } from './components/vista-documentos/vista-documentos.component';
-import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
 import { VistaTiposExpedientesComponent } from './components/vista-tipos-expedientes/vista-tipos-expedientes.component';
 import { VistaActuacionesComponent } from './components/vista-actuaciones/vista-actuaciones.component';
 

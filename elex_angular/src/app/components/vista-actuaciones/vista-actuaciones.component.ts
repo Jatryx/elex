@@ -25,7 +25,8 @@ export class VistaActuacionesComponent {
 
   modalInsertarActuacion(): void {
     const dialogoInsertar = this.dialog.open(FormulariosActuacionesComponent, {
-        width: '23%',
+        width: '15%',
+        height: '67%',
         data: {
             observaciones: '',
             finalizada: false,
@@ -63,7 +64,8 @@ export class VistaActuacionesComponent {
     this.actuacionesService.obtenerActuacionesPorId(id).subscribe(actuacion => {
       console.log(actuacion.finalizada);
       const dialogoActualizar = this.dialog.open(FormulariosActuacionesComponent, {
-        width: '23%',
+        width: '15%',
+        height: '67%',
         data: {
           observaciones: actuacion.observaciones,
           finalizada: actuacion.finalizada,
@@ -96,12 +98,6 @@ export class VistaActuacionesComponent {
         }
       })
   })
-/*
-
-  actualizarActuacion(id: number, observaciones: string, finalizado: boolean, fecha: Date, usuario: string, responsable1: string, responsable2: string, consejeria: string, idExpediente: number): Observable<Actuaciones> {
-    return this.http.put<Actuaciones>(`${this.apiRoot}/actualizar/${id}/${observaciones}/${finalizado}/${fecha}/${usuario}/${responsable1}/${responsable2}/${consejeria}/${idExpediente}`, {});
-  }
-  */
 }
 
   borrarActuacion(id: number){
