@@ -31,10 +31,6 @@ public class Tipos_expedienteService {
         return repository.save(tipo);
     }
 
-    public void borrarTipo(int id) {
-        repository.deleteById(id);
-    }
-
     public Optional<Tipos_expedienteModel> obtenerTipoPorId(int id) {
         return repository.findById(id);
     }

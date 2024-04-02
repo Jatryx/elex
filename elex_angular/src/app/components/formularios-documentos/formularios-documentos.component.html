@@ -18,7 +18,7 @@
     <mat-option *ngFor="let tipo of expedientes" [value]="tipo.id">{{tipo.nig}}</mat-option>
 </mat-select>
 </mat-form-field>
-<mat-form-field *ngIf="inserccion.mostrarCampoActuaciones">
+<mat-form-field>
   <mat-label>Relacion con actuacion</mat-label>
   <mat-select [(value)]="inserccion.actuaciones">
     <mat-option *ngFor="let actuacion of actuaciones" [value]="actuacion.id">{{actuacion.id}}</mat-option>

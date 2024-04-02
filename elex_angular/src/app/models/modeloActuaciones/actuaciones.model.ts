@@ -4,7 +4,7 @@ export interface Actuaciones {
 
     id: number,
     observaciones: string,
-    finalizada: boolean,
+    finalizado: boolean,
     fecha: Date,
     usuario: string,
     responsable1: string,

@@ -1,4 +1,8 @@
 <div *ngIf="!isLoading; else loading">
+  <app-menu></app-menu>
+
+  <h1> Tabla Expedientes </h1> 
+<div class="container-fluid mi-contenedor">
 <div class="demo-button-container">
     <button mat-raised-button (click)="modalInsertarExpediente()" class="demo-button btn">
       Añadir Expediente
@@ -59,6 +63,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
 </div>
 <ng-template #loading>
   <div class="loading-container">

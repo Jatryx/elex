@@ -125,4 +125,20 @@ public class ActuacionesController {
 
         return ResponseEntity.badRequest().body("Actuación no existe");
     }
+
+    @PutMapping("/restaurar/{id}")
+    public ResponseEntity<?> restaurarActuacion(@PathVariable int id) {
+        Optional<ActuacionesModel> actuacionBuscada = service.obtenerActuacionPorId(id);
+
+        if (actuacionBuscada.isPresent()) {
+            ActuacionesModel actuacion = actuacionBuscada.get();
+            actuacion.setBorrado(false);
+            
+            ActuacionesModel actuacionGuardada = service.actualizarActuacion(actuacion);
+            return ResponseEntity.ok(actuacionGuardada);
+            
+        }
+
+        return ResponseEntity.badRequest().body("Actuación no existe");
+    }
 }

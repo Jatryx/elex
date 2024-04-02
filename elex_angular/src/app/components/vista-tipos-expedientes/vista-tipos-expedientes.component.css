@@ -1,5 +1,6 @@
+
 .demo-table {
-    width: 100%;
+    padding: 0 20px;
   }
   
   .demo-button-container {
@@ -15,3 +16,29 @@
     align-items: center;
     height: 100vh;
   }
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    font-size: 3em;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    color: rgb(25, 62, 94);
+}
+
+.mi-contenedor {
+  padding-top: 2%;
+  padding-left: 5%; 
+  padding-right: 5%; 
+  padding-bottom: 2%;
+}
+
+.acortado{
+  width: 25%;
+}
+
+.search-container {
+  margin-left: auto;
+}
+

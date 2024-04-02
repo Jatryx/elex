@@ -54,13 +54,17 @@ public class Tipos_expedienteController {
     }
 
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<Void> borrarTipo(@PathVariable int id) {
-        return servicioTipo.obtenerTipoPorId(id)
-                .map(tipo -> {
-                    servicioTipo.borrarTipo(id);
-                    return ResponseEntity.ok().<Void>build();
-                })
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<?> borrarTipo(@PathVariable int id) {
+        Optional<Tipos_expedienteModel> tipo = servicioTipo.obtenerTipoPorId(id);
+        if (tipo.isPresent()) {
+            Tipos_expedienteModel tipoBorrado = tipo.get();
+
+            tipoBorrado.setBorrado(true);
+
+            Tipos_expedienteModel tipoGuardado = servicioTipo.actualizarTipo(tipoBorrado);
+            return ResponseEntity.ok(tipoGuardado);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo no encontrado");
     }
 
     @GetMapping("/obtenerPorId/{id}")
@@ -71,5 +75,19 @@ public class Tipos_expedienteController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo no encontrado");
         }
+    }
+
+    @PutMapping("/restaurar/{id}")
+    public ResponseEntity<?> restaurarTipo(@PathVariable int id) {
+        Optional<Tipos_expedienteModel> tipo = servicioTipo.obtenerTipoPorId(id);
+        if (tipo.isPresent()) {
+            Tipos_expedienteModel tipoRestaurado = tipo.get();
+
+            tipoRestaurado.setBorrado(false);
+
+            Tipos_expedienteModel tipoGuardado = servicioTipo.actualizarTipo(tipoRestaurado);
+            return ResponseEntity.ok(tipoGuardado);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tipo no encontrado");
     }
 }

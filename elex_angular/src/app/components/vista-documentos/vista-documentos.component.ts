@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 export class VistaDocumentosComponent {
 
   dataSource: Documentos[]  = [];
-  displayedColumns: string[] = ['id','nombreDocumento' , 'precio', 'descripcion', 'expedientes', 'acciones'];
+  displayedColumns: string[] = ['id','nombreDocumento' , 'precio', 'descripcion', 'expedientes', 'acciones', 'pdf'];
 
   constructor(
     private documentosService: DocumentosService,
@@ -35,24 +35,33 @@ export class VistaDocumentosComponent {
             nombreDocumento: '',
             descripcion: '',
             expedientes: 0,
+
         },
     })
 
     dialogoInsertar.afterClosed().subscribe((result) => {
-        if (result) {
-            this.documentosService
-                .insertarDocumento(
-                    result.precio,
-                    result.nombreDocumento,
-                    result.descripcion,
-                    result.expedientes
-                )
-                .subscribe((documentos) => {
-                    this.dataSource.push(documentos)
-                    this.dataSource = [...this.dataSource]
-                })
-        }
-    })
+      if (result) {
+        this.documentosService
+          .insertarDocumento(
+            result.precio,
+            result.nombreDocumento,
+            result.descripcion,
+            result.expedientes
+          )
+          .subscribe((documentoInsertado) => {
+            console.log(documentoInsertado.id); // Aquí puedes ver el ID del documento insertado
+            this.dataSource.push(documentoInsertado)
+            this.dataSource = [...this.dataSource]
+    
+            // Ahora puedes acceder a documentoInsertado.id aquí
+            this.documentosService.generatePdfAndSave(documentoInsertado.id, result.expedientes, result.actuaciones).subscribe(() => {
+              this.documentosService.generatePdfAndSaveToFile(documentoInsertado.id, result.expedientes, result.actuaciones).subscribe(() => {
+              });
+            });
+            
+          });
+      }
+    });
 
   }
 
@@ -71,7 +80,6 @@ export class VistaDocumentosComponent {
           nombreDocumento: documentos.nombreDocumento,
           descripcion: documentos.descripcion,
           expedientes: documentos.expediente.id,
-          mostrarCampoActuaciones: true,
         },
       });
   
@@ -98,6 +106,11 @@ export class VistaDocumentosComponent {
               }
               this.dataSource = [...this.dataSource];
 
+              this.documentosService.generatePdfAndSave(result.id, result.expedientes, result.actuaciones).subscribe(() => {
+                this.documentosService.generatePdfAndSaveToFile(result.id, result.expedientes, result.actuaciones).subscribe(() => {
+                });
+              });
+
               Swal.fire({
               title: 'Expediente actualizado',
               icon: 'success'
@@ -120,6 +133,71 @@ export class VistaDocumentosComponent {
   borrarDocumentos(id: number): void {
     this.documentosService.eliminarDocumento(id).subscribe(() => {
       this.dataSource = this.dataSource.filter(d => d.id !== id);
+    });
+  }
+  
+  mostrarEliminados: boolean = false;
+  verEliminados(): void {
+    this.mostrarEliminados = true;
+    this.documentosService.consultarBorrados().subscribe((documentos) => { 
+      this.dataSource = documentos;
+    Swal.fire({
+      title: 'Documentos eliminados',
+      text: 'Se han mostrado los documentos eliminados',
+      icon: 'info',
+    });
+  }, error => {
+    Swal.fire({
+      title: 'Error',
+      text: 'No se han podido mostrar los documentos eliminados',
+      icon: 'error',
+    });
+  });
+}
+
+  verExistentes(): void {
+    this.mostrarEliminados = false;
+    this.documentosService.consultarExistentes().subscribe((documentos) => {
+      this.dataSource = documentos;
+      Swal.fire({
+        title: 'Documentos existentes',
+        text: 'Se han mostrado los documentos existentes',
+        icon: 'info',
+      });
+    }, error => {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se han podido mostrar los documentos existentes',
+        icon: 'error',
+      });
+    });
+  }
+
+  verPdfRuta(id: number): void {
+    this.documentosService.readPdfPorRuta(id).subscribe((pdf) => {
+      const url = window.URL.createObjectURL(pdf);
+      window.open(url, '_blank');
+    });
+
+ 
+  }
+  
+  verPdfBlob(id: number): void {
+    this.documentosService.readPdf(id).subscribe((pdf) => {
+      const url = window.URL.createObjectURL(pdf);
+      window.open(url, '_blank');
+    });
+  }
+
+  descargarPdf(id: number): void {
+    this.documentosService.descargarPdf(id).subscribe((pdf) => {
+      const url = window.URL.createObjectURL(pdf);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'documento' + id + '.pdf'; // Puedes cambiar esto por el nombre que prefieras
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     });
   }
   

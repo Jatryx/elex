@@ -44,5 +44,9 @@ export class ActuacionesService {
   obtenerActuacionesPorId(id: number): Observable<Actuaciones> {
     return this.http.get<Actuaciones>(`${this.apiRoot}/consultarPorId/${id}`);
   }
+
+  restaurarActuacion(id: number): Observable<Actuaciones> {
+    return this.http.put<Actuaciones>(`${this.apiRoot}/restaurar/${id}`, {});
+  }
   
 }

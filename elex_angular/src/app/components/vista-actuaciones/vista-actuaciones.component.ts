@@ -4,6 +4,10 @@ import { Actuaciones } from '../../models/modeloActuaciones/actuaciones.model';
 import { ActuacionesService } from '../../services/servicioActuaciones/actuaciones.service';
 import { FormulariosActuacionesComponent } from '../formularios-actuaciones/formularios-actuaciones.component';
 import Swal from 'sweetalert2';
+import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
+import { ExpedientesService } from '../../services/servicioExpedientes/expedientes.service';
+import { FormControl } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vista-actuaciones',
@@ -11,17 +15,19 @@ import Swal from 'sweetalert2';
   styleUrl: './vista-actuaciones.component.css'
 })
 export class VistaActuacionesComponent {
+  expedientes: Expedientes[] = [];
   dataSource: Actuaciones[]  = [];
-  displayedColumns: string[] = ['id', 'observaciones', 'finalizada', 'fecha', 'usuario', 'responsable1', 'responsable2', 'consejeria', 'expediente', 'acciones'];
+  displayedColumns: string[] = ['id', 'observaciones', 'finalizado', 'fecha', 'usuario', 'responsable1', 'responsable2', 'consejeria', 'expediente', 'acciones'];
 
   constructor(
     private actuacionesService: ActuacionesService,
+    private expedientesService: ExpedientesService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.actuacionesService.consultarExistentes().subscribe((actuacion)=> this.dataSource = actuacion)
-    console.log(this.dataSource);
+    this.expedientesService.consultarExistentes().subscribe((expediente) => this.expedientes = expediente)
   }
 
   modalInsertarActuacion(): void {
@@ -30,7 +36,7 @@ export class VistaActuacionesComponent {
         height: '67%',
         data: {
             observaciones: '',
-            finalizada: false,
+            finalizado: false,
             fecha: new Date(),
             usuario: '',
             responsable1: '',
@@ -45,7 +51,7 @@ export class VistaActuacionesComponent {
             this.actuacionesService
                 .insertarActuacion(
                     result.observaciones,
-                    result.finalizada,
+                    result.finalizado,
                     result.fecha,
                     result.usuario,
                     result.responsable1,
@@ -64,13 +70,13 @@ export class VistaActuacionesComponent {
   isLoading = false;
   modalActualizarActuacion(id: number){
     this.actuacionesService.obtenerActuacionesPorId(id).subscribe(actuacion => {
-      console.log(actuacion.finalizada);
+      console.log(actuacion.finalizado);
       const dialogoActualizar = this.dialog.open(FormulariosActuacionesComponent, {
         width: '15%',
         height: '67%',
         data: {
           observaciones: actuacion.observaciones,
-          finalizada: actuacion.finalizada,
+          finalizado: actuacion.finalizado,
           fecha: actuacion.fecha,
           usuario: actuacion.usuario,
           responsable1: actuacion.responsable1,
@@ -85,7 +91,7 @@ export class VistaActuacionesComponent {
             .actualizarActuacion(
               id,
               result.observaciones,
-              result.finalizada,
+              result.finalizado,
               result.fecha,
               result.usuario,
               result.responsable1,
@@ -104,6 +110,7 @@ export class VistaActuacionesComponent {
                 setTimeout(() => {
                   this.isLoading = false;
                 }, 1000);
+                window.location.reload();
               });
             }, error => {
               setTimeout(() => {
@@ -122,4 +129,83 @@ export class VistaActuacionesComponent {
       }
     })
   }
+
+  mostrarEliminados: boolean = false;
+  verEliminados(){
+    this.mostrarEliminados = true;
+    this.actuacionesService.consultarBorradas().subscribe((actuacion) => {
+      this.dataSource = actuacion;
+      Swal.fire({
+        title: 'Actuaciones eliminadas',
+        text: 'Las actuaciones eliminadas se han mostrado correctamente.',
+        icon: 'success'
+      });
+    }, error => {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se han podido mostrar las actuaciones eliminadas.',
+        icon: 'error'
+      });
+    });
+  }
+
+  verExistentes(){
+    this.mostrarEliminados = false;
+    this.actuacionesService.consultarExistentes().subscribe((actuacion) => {
+      this.dataSource = actuacion;
+      Swal.fire({
+        title: 'Actuaciones existentes',
+        text: 'Las actuaciones existentes se han mostrado correctamente.',
+        icon: 'success'
+      });
+    }, error => {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se han podido mostrar las actuaciones existentes.',
+        icon: 'error'
+      });
+    });
+  }
+
+  restaurarActuacion(id: number){
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esto!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, restaurar!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.actuacionesService.restaurarActuacion(id).subscribe(() => {
+        this.dataSource = this.dataSource.filter((actuacion) => actuacion.id !== id)
+        Swal.fire('Restaurado!', 'La actuación ha sido restaurada.', 'success');
+      })
+    } else {
+      Swal.fire({
+        title: 'No se ha restaurado',
+        text: 'La actuación no ha sido restaurada.',
+        icon: 'error'
+      });
+    }
+  })
+  } 
+
+  filtro = new FormControl();
+
+  filtrarPorExpedientes() {
+    this.actuacionesService.obtenerActuacionesPorExpediente(this.filtro.value).subscribe((actuacion) => {
+      this.dataSource = actuacion;
+    })
+    
+  }
+
+  borrarFiltro() {
+    this.actuacionesService.consultarExistentes().subscribe((actuacion) => {
+      this.dataSource = actuacion;
+    })
+      this.filtro.reset(); // Esto borrará el valor del filtro
+  }
+
 }

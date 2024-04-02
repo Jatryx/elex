@@ -1,9 +1,30 @@
 <div *ngIf="!isLoading; else loading">
-<div class="demo-button-container">
-    <button mat-raised-button (click)="modalInsertarActuacion()" class="demo-button btn">
-      Añadir Actuacion
-    </button>
-</div>
+  <app-menu> </app-menu>
+
+  <div *ngIf="!mostrarEliminados">
+  <h1> Tabla de Actuaciones </h1>
+  <div class="container-fluid mi-contenedor">
+  <div class="demo-button-container d-flex align-items-center">
+      <button mat-raised-button (click)="modalInsertarActuacion()" class="demo-button btn">
+        Añadir Actuacion
+      </button>
+      <button mat-raised-button (click)="verEliminados()" class="demo-button btn mr-2">
+        Ver Eliminados
+      </button>
+
+      <div class="search-container">
+        <label modificado style="margin-right: 10px;">Listar por Expedientes</label>
+        <mat-form-field class="form-control">
+            <mat-select placeholder="Seleccionar" [formControl]="filtro" (selectionChange)="filtrarPorExpedientes()">
+                <mat-option *ngFor="let expediente of expedientes" [value]="expediente.id">
+                    {{ expediente.nig }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button class="modificado" mat-raised-button (click)="borrarFiltro()">Borrar filtro</button>
+    </div>
+
+  </div>
   
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
@@ -19,9 +40,9 @@
     </ng-container>
   
   
-<ng-container matColumnDef="finalizada">
-  <th mat-header-cell *matHeaderCellDef>finalizada</th>
-  <td mat-cell *matCellDef="let element">{{element.finalizada ? 'Finalizado' : 'Sin finalizar'}}</td>
+<ng-container matColumnDef="finalizado">
+  <th mat-header-cell *matHeaderCellDef>finalizado</th>
+  <td mat-cell *matCellDef="let element">{{element.finalizado ? 'Sin finalizar' : 'Finalizado'}}</td>
 </ng-container>
 
     <ng-container matColumnDef="fecha">
@@ -69,6 +90,94 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+</div>
+</div>
+
+<!-- Tabla de actuaciones borradas -->
+
+<div *ngIf="mostrarEliminados">
+  <h1> Tabla de Actuaciones </h1>
+  <div class="container-fluid mi-contenedor">
+<div class="demo-button-container">
+    <button mat-raised-button (click)="modalInsertarActuacion()" class="demo-button btn">
+      Añadir Actuacion
+    </button>
+    <button mat-raised-button (click)="verExistentes()" class="demo-button btn mr-2">
+      Ver Eliminados
+    </button>
+</div>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+  
+ 
+    <ng-container matColumnDef="observaciones">
+      <th mat-header-cell *matHeaderCellDef>observaciones</th>
+      <td mat-cell *matCellDef="let element">{{element.observaciones}}</td>
+    </ng-container>
+  
+  
+<ng-container matColumnDef="finalizado">
+  <th mat-header-cell *matHeaderCellDef>finalizado</th>
+  <td mat-cell *matCellDef="let element">{{element.finalizado ? 'Sin finalizar' : 'Finalizado'}}</td>
+</ng-container>
+
+    <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef>fecha</th>
+        <td mat-cell *matCellDef="let element">{{element.fecha}}</td>
+      </ng-container>
+  
+  
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef>usuario</th>
+      <td mat-cell *matCellDef="let element">{{element.usuario}}</td>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="responsable1">
+        <th mat-header-cell *matHeaderCellDef>responsable1</th>
+        <td mat-cell *matCellDef="let element">{{element.responsable1}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="responsable2">
+        <th mat-header-cell *matHeaderCellDef>responsable2</th>
+        <td mat-cell *matCellDef="let element">{{element.responsable2}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="consejeria">
+        <th mat-header-cell *matHeaderCellDef>consejeria</th>
+        <td mat-cell *matCellDef="let element">{{element.consejeria}}</td>
+      </ng-container>
+
+    <ng-container matColumnDef="expediente">
+        <th mat-header-cell *matHeaderCellDef>expediente</th>
+        <td mat-cell *matCellDef="let element">{{element.expediente.nig}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-button (click)="modalActualizarActuacion(element.id)"><mat-icon>description</mat-icon></button>
+          
+          <button mat-button (click)="restaurarActuacion(element.id)">Añadir actuación borrada</button>
+        </td>
+      </ng-container>
+   
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+</div>
+
+
+
+
+
 </div>
 <ng-template #loading>
   <div class="loading-container">

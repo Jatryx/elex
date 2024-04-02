@@ -52,4 +52,10 @@ export class TipoExpedienteService {
   obtenerTipoPorId(id: number): Observable<TipoExpediente> {
     return this.http.get<TipoExpediente>(`${this.apiRoot}/obtenerPorId/${id}`);
   }
+
+  restaurarTipo(id: number): Observable<void> {
+    return this.http.put<void>(`${this.apiRoot}/restaurar/${id}`, {});
+  }
+
+  
 }

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormulariosExpedientesComponent } from './components/formularios-expedientes/formularios-expedientes.component';
 import { FormulariosDocumentosComponent } from './components/formularios-documentos/formularios-documentos.component';
 import { FormulariosActuacionesComponent } from './components/formularios-actuaciones/formularios-actuaciones.component';
@@ -25,6 +25,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
+import { MenuComponent } from './menu/menu.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -39,7 +41,8 @@ import {MatIconModule} from '@angular/material/icon';
     VistaActuacionesComponent,
     VistaDocumentosComponent,
     LoginComponent,
-    FormulariosTipoExpedienteComponent
+    FormulariosTipoExpedienteComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideAnimationsAsync()

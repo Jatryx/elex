@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class VistaTiposExpedientesComponent {
 
   dataSource: TipoExpediente[] = [];
+  dataSourceEliminados: TipoExpediente[] = [];
   displayedColumns: string[] = ['id','materia','acciones'];
   constructor(
     private tiposExpedienteService: TipoExpedienteService,
@@ -120,4 +121,86 @@ borrarExpediente(id: number): void {
     }
   })
 }
+
+mostrarEliminados: boolean = false;
+verEliminados(): void {
+  this.mostrarEliminados = true;
+  this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => {
+    this.dataSourceEliminados = tiposExpedienteBorrados;
+    Swal.fire({
+      title: 'Expedientes eliminados',
+      text: 'Se han cargado los expedientes eliminados.',
+      icon: 'info'
+    });
+  }, error => {
+    Swal.fire({
+      title: 'Error',
+      text: 'Hubo un error al cargar los expedientes eliminados.',
+      icon: 'error'
+    });
+  });
+}
+
+verExistentes(): void {
+  this.mostrarEliminados = false;
+  Swal.fire({
+    title: 'Expedientes existentes',
+    text: 'Se han cargado los expedientes existentes.',
+    icon: 'info'
+  });
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
+}
+
+restaurarExpediente(id: number): void {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, restauralo!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.tiposExpedienteService.restaurarTipo(id).subscribe(() => {
+        this.dataSourceEliminados = this.dataSourceEliminados.filter((tipoExpediente) => tipoExpediente.id !== id)
+
+        Swal.fire('Restaurado!', 'El expediente ha sido restaurado.', 'success');
+      })
+    } else {
+      Swal.fire({
+        title: 'No se ha restaurado',
+        text: 'El expediente no ha sido restaurado.',
+        icon: 'error'
+      });
+    }
+  })
+  }
+
+  filtro: string = '';
+  filtrarExpedientesExistentes(): void {
+    if (this.filtro) {
+      this.dataSource = this.dataSource.filter((tipoExpediente) => 
+        tipoExpediente.materia.toLowerCase().includes(this.filtro.toLowerCase())
+      );
+    } else {
+      // Si no hay filtro, deberías recargar tus datos desde el servicio
+      this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente)=> this.dataSource = tiposExpediente)
+    }
+  }
+
+  filtroBorrado: string = '';
+  filtrarExpedientesBorrados(): void {
+    if (this.filtroBorrado) {
+      this.dataSourceEliminados = this.dataSourceEliminados.filter((tipoExpediente) => 
+        tipoExpediente.materia.toLowerCase().includes(this.filtroBorrado.toLowerCase())
+      );
+    } else {
+      // Si no hay filtro, deberías recargar tus datos desde el servicio
+      this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => this.dataSourceEliminados = tiposExpedienteBorrados)
+    }
+  }
+
 }

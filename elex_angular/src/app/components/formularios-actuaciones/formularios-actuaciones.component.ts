@@ -14,7 +14,7 @@ export class FormulariosActuacionesComponent {
     private expedientesService: ExpedientesService,
     public dialogRef: MatDialogRef<FormulariosActuacionesComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public inserccion: { observaciones: string; finalizada: boolean; fecha: Date; usuario: string; responsable1: string; responsable2: string; consejeria: string; expediente: string},
+    public inserccion: { observaciones: string; finalizado: boolean; fecha: Date; usuario: string; responsable1: string; responsable2: string; consejeria: string; expediente: string},
   ){}
 
   onNoClick(): void {
@@ -23,7 +23,6 @@ export class FormulariosActuacionesComponent {
 
   expedientes: Expedientes[] = [];
   ngOnInit(): void {
-    console.log("hola");
     this.expedientesService.consultarExistentes().subscribe((expediente)=> this.expedientes = expediente)
     console.log(this.expedientes);
   }
