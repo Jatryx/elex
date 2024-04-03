@@ -205,27 +205,34 @@ verExistentes(): void{
     });
   }
 
+  dataSourceFiltarda: Expedientes[] = [];
   filtro: string = '';
-
   filtrarExpedientesExistente(): void {
+    this.expedientesService.consultarExistentes().subscribe((expediente) => {
+    this.dataSourceFiltarda = expediente;
     if(this.filtro) {
-      this.dataSource = this.dataSource.filter((expediente) => 
+      this.dataSource = this.dataSourceFiltarda.filter((expediente) => 
         expediente.nig.toLowerCase().includes(this.filtro.toLowerCase())
       );
     } else {
       this.expedientesService.consultarExistentes().subscribe((expepediente) => this.dataSource = expepediente)
     }
+    });
   }
   
+  dataSourceFiltradaEliminada: Expedientes[] = [];
   filtroBorrado: string = '';
   filtrarExpedientesBorrados(): void{
+    this.expedientesService.consultarBorrados().subscribe((expediente) => {
+      this.dataSourceFiltradaEliminada = expediente
     if(this.filtroBorrado) {
-      this.dataSourceEliminados = this.dataSourceEliminados.filter((expediente) => 
+      this.dataSourceEliminados = this.dataSourceFiltradaEliminada.filter((expediente) => 
       expediente.nig.toLowerCase().includes(this.filtroBorrado.toLowerCase())
       );
     } else {
       this.expedientesService.consultarBorrados().subscribe((expedientesBorrados) => this.dataSourceEliminados = expedientesBorrados)
     }
+    });
   }
 
 

@@ -230,23 +230,30 @@ export class VistaDocumentosComponent {
     });
   }
 
+  dataSourceDocumentosFiltrada: Documentos[] = [];
   filtro: string = '';
   filtrarPorNombreDocumento(): void {
+    this.documentosService.consultarExistentes().subscribe((documentos) => {
+      this.dataSourceDocumentosFiltrada = documentos;
     if (this.filtro) {
-      this.dataSource = this.dataSource.filter((documento) => documento.nombreDocumento.toLowerCase().includes(this.filtro.toLowerCase()));
+      this.dataSource = this.dataSourceDocumentosFiltrada.filter((documento) => documento.nombreDocumento.toLowerCase().includes(this.filtro.toLowerCase()));
     } else {
       this.documentosService.consultarExistentes().subscribe((documentos) => this.dataSource = documentos);
     }
+    });
   }
 
+  dataSourceEliminadosFiltrada: Documentos[] = [];
   filtroBorrado: string = '';
   filtrarPorNombreDocumentoBorrado(): void {
+    this.documentosService.consultarBorrados().subscribe((documentos) => {
+      this.dataSourceEliminadosFiltrada = documentos;
     if (this.filtroBorrado) {
-      this.dataSourceEliminados = this.dataSourceEliminados.filter((documento) => 
+      this.dataSourceEliminados = this.dataSourceEliminadosFiltrada.filter((documento) => 
       documento.nombreDocumento.toLowerCase().includes(this.filtroBorrado.toLowerCase()));
     } else {
       this.documentosService.consultarBorrados().subscribe((documentos) => this.dataSourceEliminados = documentos);
     }
+  });
   }
-  
 }

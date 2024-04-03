@@ -179,28 +179,37 @@ restaurarTipoExpediente(id: number): void {
   })
   }
 
+  dataSourceFiltrada: TipoExpediente[] = [];
   filtro: string = '';
   filtrarTipoExpedientesExistentes(): void {
-    if (this.filtro) {
-      this.dataSource = this.dataSource.filter((tipoExpediente) => 
-        tipoExpediente.materia.toLowerCase().includes(this.filtro.toLowerCase())
-      );
-    } else {
-      this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente) => 
-      this.dataSource = tiposExpediente)
-    }
+    this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente) => {
+      this.dataSourceFiltrada = tiposExpediente;
+      if (this.filtro) {
+        this.dataSource = this.dataSourceFiltrada.filter((tipoExpediente) => 
+          tipoExpediente.materia.toLowerCase().includes(this.filtro.toLowerCase())
+        );
+      } else {
+        this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente) => 
+        this.dataSource = tiposExpediente)
+      }
+    });
   }
-
+  
+  dataSourceEliminadosFiltrada: TipoExpediente[] = [];
   filtroBorrado: string = '';
+  
   filtrarTipoExpedientesBorrados(): void {
-    if (this.filtroBorrado) {
-      this.dataSourceEliminados = this.dataSourceEliminados.filter((tipoExpediente) => 
-        tipoExpediente.materia.toLowerCase().includes(this.filtroBorrado.toLowerCase())
-      );
-    } else {
-
-      this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => this.dataSourceEliminados = tiposExpedienteBorrados)
-    }
+    this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => {
+      this.dataSourceEliminadosFiltrada = tiposExpedienteBorrados;
+      if (this.filtroBorrado) {
+        this.dataSourceEliminados = this.dataSourceEliminadosFiltrada.filter((tipoExpediente) => 
+          tipoExpediente.materia.toLowerCase().includes(this.filtroBorrado.toLowerCase())
+        );
+      } else {
+        this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => 
+        this.dataSourceEliminados = tiposExpedienteBorrados)
+      }
+    });
   }
 
 }
