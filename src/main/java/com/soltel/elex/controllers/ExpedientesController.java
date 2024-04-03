@@ -143,4 +143,20 @@ public class ExpedientesController {
         return ResponseEntity.ok(expediente);
     }
 
+    @PutMapping("/restaurar/{id}")
+    public ResponseEntity<?> restaurarExpediente(@PathVariable int id){
+        Optional<ExpedientesModel> expedienteBuscado = servicioExpediente.obtenerExpedientePorId(id);
+
+        if (expedienteBuscado.isPresent()){
+
+            ExpedientesModel expedienteRestaurado = expedienteBuscado.get();
+
+            expedienteRestaurado.setBorrado(false);
+
+            ExpedientesModel expedienteGuardado = servicioExpediente.insertarExpediente(expedienteRestaurado);
+            return ResponseEntity.ok(expedienteGuardado);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Expediente no existe");
+    }
 }

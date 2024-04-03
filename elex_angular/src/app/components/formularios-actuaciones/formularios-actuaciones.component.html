@@ -30,9 +30,9 @@
   <textarea matInput [(ngModel)] = "inserccion.consejeria"></textarea>
 </mat-form-field>
 <mat-form-field>
-  <mat-label>Tipo</mat-label>
+  <mat-label>Expediente</mat-label>
   <mat-select [(value)]="inserccion.expediente">
-    <mat-option *ngFor="let tipo of expedientes" [value]="tipo.id">{{tipo.nig}}</mat-option>
+    <mat-option *ngFor="let expediente of expedientes" [value]="expediente.id">{{expediente.nig}}</mat-option>
 </mat-select>
 </mat-form-field>
 <section mat-dialog-actions>

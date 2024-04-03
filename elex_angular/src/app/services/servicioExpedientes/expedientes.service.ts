@@ -41,7 +41,11 @@ export class ExpedientesService {
     return this.http.get<Expedientes[]>(`${this.apiRoot}/consultarPorEstadoYFecha/${estado}/${fecha}`);
   }
 
-  consultarPorNig(nip: string): Observable<Expedientes> {
-    return this.http.get<Expedientes>(`${this.apiRoot}/consultarPorNig/${nip}`);
+  consultarPorNig(nig: string): Observable<Expedientes> {
+    return this.http.get<Expedientes>(`${this.apiRoot}/consultarPorNig/${nig}`);
+  }
+
+  restaurarExpediente(id: number): Observable<any> {
+    return this.http.put(`${this.apiRoot}/restaurar/${id}`, null);
   }
 }

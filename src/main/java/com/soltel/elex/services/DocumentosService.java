@@ -186,6 +186,17 @@ public class DocumentosService {
     public void generatePdfAndSaveToFile(Integer idDocumento, Integer idExpediente, Integer idActuacion) {
         DocumentosModel documento = repository.findById(idDocumento).orElseThrow(() -> new RuntimeException("Documento no encontrado"));
     
+        String rutaArchivoBorrar = documento.getRuta();
+
+        if(rutaArchivoBorrar != null)
+        {
+            try {
+                Files.deleteIfExists(Paths.get(rutaArchivoBorrar));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         ExpedientesModel expediente = expedienteRepository.findById(idExpediente).orElseThrow(() -> new RuntimeException("Expediente no encontrado"));
 
         String ruta = documentDir + "/documento_" + expediente.getNig()+ "_" + idDocumento + ".pdf";

@@ -54,7 +54,7 @@ export class VistaTiposExpedientesComponent {
 
   isLoading = false;
 
-modalActualizarExpediente(id: number): void {
+  modalActualizarTipoExpediente(id: number): void {
   this.tiposExpedienteService.obtenerTipoPorId(id).subscribe(tipoExpediente => {
     const dialogoActualizar = this.dialog.open(FormulariosTipoExpedienteComponent, {
       width: '14%',
@@ -96,7 +96,7 @@ modalActualizarExpediente(id: number): void {
   })
 }
   
-borrarExpediente(id: number): void {
+borrarTipoExpediente(id: number): void {
   Swal.fire({
     title: '¿Estás seguro?',
     text: "No podrás revertir esto!",
@@ -153,7 +153,7 @@ verExistentes(): void {
   }, 1000);
 }
 
-restaurarExpediente(id: number): void {
+restaurarTipoExpediente(id: number): void {
   Swal.fire({
     title: '¿Estás seguro?',
     text: "No podrás revertir esto!",
@@ -180,25 +180,25 @@ restaurarExpediente(id: number): void {
   }
 
   filtro: string = '';
-  filtrarExpedientesExistentes(): void {
+  filtrarTipoExpedientesExistentes(): void {
     if (this.filtro) {
       this.dataSource = this.dataSource.filter((tipoExpediente) => 
         tipoExpediente.materia.toLowerCase().includes(this.filtro.toLowerCase())
       );
     } else {
-      // Si no hay filtro, deberías recargar tus datos desde el servicio
-      this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente)=> this.dataSource = tiposExpediente)
+      this.tiposExpedienteService.getTiposExpedienteExistentes().subscribe((tiposExpediente) => 
+      this.dataSource = tiposExpediente)
     }
   }
 
   filtroBorrado: string = '';
-  filtrarExpedientesBorrados(): void {
+  filtrarTipoExpedientesBorrados(): void {
     if (this.filtroBorrado) {
       this.dataSourceEliminados = this.dataSourceEliminados.filter((tipoExpediente) => 
         tipoExpediente.materia.toLowerCase().includes(this.filtroBorrado.toLowerCase())
       );
     } else {
-      // Si no hay filtro, deberías recargar tus datos desde el servicio
+
       this.tiposExpedienteService.getTiposExpedienteBorrados().subscribe((tiposExpedienteBorrados) => this.dataSourceEliminados = tiposExpedienteBorrados)
     }
   }

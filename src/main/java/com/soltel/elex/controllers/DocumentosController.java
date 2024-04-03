@@ -174,4 +174,19 @@ public class DocumentosController {
         return ResponseEntity.ok(service.obtenerDocumentoPorId(id));
     }
     
+    @PostMapping("/restaurar/{id}")
+    public ResponseEntity<?> restaurarDocumento(@PathVariable Integer id) {
+        Optional<DocumentosModel> documentoBuscado = service.obtenerDocumentoPorId(id);
+
+        if(documentoBuscado.isPresent())
+        {
+            DocumentosModel documento = documentoBuscado.get();
+            documento.setBorrado(false);
+
+            DocumentosModel documentoGuardado = service.actualizarDocumento(documento);
+            return ResponseEntity.ok(documentoGuardado);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Documento no existe");
+    }
 }

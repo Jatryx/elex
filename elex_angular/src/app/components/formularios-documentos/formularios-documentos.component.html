@@ -21,7 +21,7 @@
 <mat-form-field>
   <mat-label>Relacion con actuacion</mat-label>
   <mat-select [(value)]="inserccion.actuaciones">
-    <mat-option *ngFor="let actuacion of actuaciones" [value]="actuacion.id">{{actuacion.id}}</mat-option>
+    <mat-option *ngFor="let actuacion of actuaciones" [value]="actuacion.id">{{actuacion.usuario}}</mat-option>
   </mat-select>
 </mat-form-field>
 <section mat-dialog-actions>

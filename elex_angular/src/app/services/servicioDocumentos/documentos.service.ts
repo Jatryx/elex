@@ -68,4 +68,8 @@ export class DocumentosService {
     const url = `${this.apiRoot}/descargar/${idDocumento}`;
     return this.http.get(url, { responseType: 'blob' });
   }
+
+  restaurarDocumento(id: number): Observable<any> {
+    return this.http.post(`${this.apiRoot}/restaurar/${id}`, null);
+  }
 }

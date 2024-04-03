@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 export class VistaDocumentosComponent {
 
   dataSource: Documentos[]  = [];
+  dataSourceEliminados: Documentos[] = [];
   displayedColumns: string[] = ['id','nombreDocumento' , 'precio', 'descripcion', 'expedientes', 'acciones', 'pdf'];
 
   constructor(
@@ -49,11 +50,12 @@ export class VistaDocumentosComponent {
             result.expedientes
           )
           .subscribe((documentoInsertado) => {
-            console.log(documentoInsertado.id); // Aquí puedes ver el ID del documento insertado
             this.dataSource.push(documentoInsertado)
             this.dataSource = [...this.dataSource]
     
-            // Ahora puedes acceder a documentoInsertado.id aquí
+            if(result.actuaciones == null){
+              result.actuaciones = 0;
+            }
             this.documentosService.generatePdfAndSave(documentoInsertado.id, result.expedientes, result.actuaciones).subscribe(() => {
               this.documentosService.generatePdfAndSaveToFile(documentoInsertado.id, result.expedientes, result.actuaciones).subscribe(() => {
               });
@@ -105,7 +107,9 @@ export class VistaDocumentosComponent {
                 this.dataSource.push(expediente);
               }
               this.dataSource = [...this.dataSource];
-
+              if(result.actuaciones == null){
+                result.actuaciones = 0;
+              }
               this.documentosService.generatePdfAndSave(result.id, result.expedientes, result.actuaciones).subscribe(() => {
                 this.documentosService.generatePdfAndSaveToFile(result.id, result.expedientes, result.actuaciones).subscribe(() => {
                 });
@@ -140,7 +144,7 @@ export class VistaDocumentosComponent {
   verEliminados(): void {
     this.mostrarEliminados = true;
     this.documentosService.consultarBorrados().subscribe((documentos) => { 
-      this.dataSource = documentos;
+      this.dataSourceEliminados = documentos;
     Swal.fire({
       title: 'Documentos eliminados',
       text: 'Se han mostrado los documentos eliminados',
@@ -199,6 +203,50 @@ export class VistaDocumentosComponent {
       a.click();
       document.body.removeChild(a);
     });
+  }
+
+  restaurarDocumento(id: number): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esto',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, restaurar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.documentosService.restaurarDocumento(id).subscribe(() => {
+          this.dataSourceEliminados = this.dataSourceEliminados.filter((documento) => documento.id !== id);
+          Swal.fire('Restaurado', 'El documento ha sido restaurado', 'success');
+        });
+      } else {
+        Swal.fire({
+          title: 'No se ha restaurado',
+          text: 'El documento no ha sido restaurado.',
+          icon: 'error'
+        });
+      }
+    });
+  }
+
+  filtro: string = '';
+  filtrarPorNombreDocumento(): void {
+    if (this.filtro) {
+      this.dataSource = this.dataSource.filter((documento) => documento.nombreDocumento.toLowerCase().includes(this.filtro.toLowerCase()));
+    } else {
+      this.documentosService.consultarExistentes().subscribe((documentos) => this.dataSource = documentos);
+    }
+  }
+
+  filtroBorrado: string = '';
+  filtrarPorNombreDocumentoBorrado(): void {
+    if (this.filtroBorrado) {
+      this.dataSourceEliminados = this.dataSourceEliminados.filter((documento) => 
+      documento.nombreDocumento.toLowerCase().includes(this.filtroBorrado.toLowerCase()));
+    } else {
+      this.documentosService.consultarBorrados().subscribe((documentos) => this.dataSourceEliminados = documentos);
+    }
   }
   
 }

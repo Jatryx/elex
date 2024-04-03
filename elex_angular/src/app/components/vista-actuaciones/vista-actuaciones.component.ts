@@ -193,7 +193,6 @@ export class VistaActuacionesComponent {
   } 
 
   filtro = new FormControl();
-
   filtrarPorExpedientes() {
     this.actuacionesService.obtenerActuacionesPorExpediente(this.filtro.value).subscribe((actuacion) => {
       this.dataSource = actuacion;
@@ -205,7 +204,15 @@ export class VistaActuacionesComponent {
     this.actuacionesService.consultarExistentes().subscribe((actuacion) => {
       this.dataSource = actuacion;
     })
-      this.filtro.reset(); // Esto borrará el valor del filtro
+      this.filtro.reset(); 
   }
 
+  borrarFiltroBorrado(){
+    this.actuacionesService.consultarBorradas().subscribe((actuacion) => {
+      this.dataSource = actuacion;
+    })
+      this.filtro.reset();
+  }
+
+  
 }
