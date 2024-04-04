@@ -1,0 +1,64 @@
+
+.demo-table {
+    padding: 0 20px;
+  }
+  
+  .demo-button-container {
+    padding-bottom: 16px;
+  }
+  
+  .demo-button + .demo-button {
+    margin-left: 8px;
+  }
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  h1{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5%;
+    font-size: 3em;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    color: rgb(25, 62, 94);
+  }
+
+  h2{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-decoration: underline;
+    text-underline-offset: 0.3em;
+    color: rgb(25, 62, 94);
+  }
+
+  .table-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    max-width: 80%;
+  }
+  .dosTablas{
+    display: flex; 
+    justify-content: center;
+    
+  }
+
+  .tabla-actuaciones {
+    margin-left: 10%;
+    margin-right: 5%;
+    }
+
+  .tabla-documentos {
+    margin-left: 5%;
+   }
+
+   .mat-mdc-card{
+    background-color: transparent; 
+    box-shadow: none;
+   }    
+  

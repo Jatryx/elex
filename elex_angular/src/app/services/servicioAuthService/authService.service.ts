@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,13 @@ export class AuthServiceService {
   }
   */
   login(username: string, password: string): Observable<any> {
-     console.log(this.apiUrl, {username, password});
     return this.http.post<any>(this.apiUrl, {username, password}).pipe(
-     
       tap(response => {
-        // Guardar el token de autenticación en el almacenamiento local
-        localStorage.setItem('authToken', response.token);
+        if (response && response.token) {
+          localStorage.setItem('authToken', response.token);
+        } else {
+          console.error('La respuesta del servidor no contiene un token:', response);
+        }
       })
     );
   }

@@ -23,7 +23,9 @@ export class FormulariosActuacionesComponent {
 
   expedientes: Expedientes[] = [];
   ngOnInit(): void {
-    this.expedientesService.consultarExistentes().subscribe((expediente)=> this.expedientes = expediente)
-    console.log(this.expedientes);
+    this.expedientesService.consultarExistentes().subscribe((expediente) => {
+      this.expedientes = expediente;
+      console.log(this.expedientes);
+    });
   }
 }

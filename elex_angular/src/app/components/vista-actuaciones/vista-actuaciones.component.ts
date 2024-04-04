@@ -70,7 +70,6 @@ export class VistaActuacionesComponent {
   isLoading = false;
   modalActualizarActuacion(id: number){
     this.actuacionesService.obtenerActuacionesPorId(id).subscribe(actuacion => {
-      console.log(actuacion.finalizado);
       const dialogoActualizar = this.dialog.open(FormulariosActuacionesComponent, {
         width: '15%',
         height: '67%',

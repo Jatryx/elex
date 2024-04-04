@@ -28,7 +28,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { MenuComponent } from './menu/menu.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { VistaRelacionExpedienteComponent } from './components/vista-relacion-expediente/vista-relacion-expediente.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     VistaDocumentosComponent,
     LoginComponent,
     FormulariosTipoExpedienteComponent,
-    MenuComponent
+    MenuComponent,
+    VistaRelacionExpedienteComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatPaginatorModule,
+    MatCardModule,
   ],
   providers: [
     provideAnimationsAsync()

@@ -4,6 +4,7 @@ import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
 import { FormulariosExpedientesComponent } from '../formularios-expedientes/formularios-expedientes.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vista-expedientes',
@@ -18,7 +19,8 @@ export class VistaExpedientesComponent implements OnInit{
   displayedColumns: string[] = ['nig', 'fecha', 'estado', 'opciones', 'descripcion', 'tipo', 'acciones'];
   constructor(
     private expedientesService: ExpedientesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.expedientesService.consultarExistentes().subscribe((expediente)=> this.dataSource = expediente)
@@ -235,5 +237,8 @@ verExistentes(): void{
     });
   }
 
+  verDocumentosyActuacionesExpediente(nig: string, id: number): void {
+    this.router.navigate(['/vista-relacion-expediente/',nig,id]);
+  }
 
 }

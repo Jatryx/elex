@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentosService } from '../../services/servicioDocumentos/documentos.service';
 import { Documentos } from '../../models/modeloDocumentos/documentos.model';
-import { FormulariosExpedientesComponent } from '../formularios-expedientes/formularios-expedientes.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FormulariosDocumentosComponent } from '../formularios-documentos/formularios-documentos.component';
 import Swal from 'sweetalert2';
@@ -19,7 +18,7 @@ export class VistaDocumentosComponent {
 
   constructor(
     private documentosService: DocumentosService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {} 
   ngOnInit(): void {
     console.log("hola");
@@ -198,7 +197,7 @@ export class VistaDocumentosComponent {
       const url = window.URL.createObjectURL(pdf);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'documento' + id + '.pdf'; // Puedes cambiar esto por el nombre que prefieras
+      a.download = 'documento' + id + '.pdf'; 
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -256,4 +255,5 @@ export class VistaDocumentosComponent {
     }
   });
   }
+
 }

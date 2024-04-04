@@ -1,0 +1,92 @@
+<app-menu></app-menu>
+
+<div>
+    <mat-card>
+      <mat-card-content>
+        <h1>Tabla de Relaciones Expedientes</h1>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="dosTablas">
+      <!-- Tabla para dataExpediente -->
+      <mat-card *ngIf="dataExpediente">
+        <mat-card-content>
+          <h2>Expediente seleccionado</h2>
+          <table mat-table [dataSource]="[dataExpediente]" class="mat-elevation-z8 table-container">
+            <!-- Aquí van las columnas de la tabla para dataExpediente -->
+            <ng-container matColumnDef="nig">
+              <th mat-header-cell *matHeaderCellDef> Nig </th>
+              <td mat-cell *matCellDef="let element"> {{element.nig}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="tipo">
+              <th mat-header-cell *matHeaderCellDef> Tipo De Expediente </th>
+              <td mat-cell *matCellDef="let element"> {{element.tipo.materia}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef> Fecha </th>
+              <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayeConlumnsExpediente"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayeConlumnsExpediente;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Tabla para dataActuaciones -->
+      <mat-card *ngIf="dataActuaciones.length > 0" class="tabla-actuaciones">
+        <mat-card-content>
+          <h2>Tabla de Actuaciones</h2>
+          <table mat-table [dataSource]="dataActuaciones" class="mat-elevation-z8 table-container">
+            <!-- Aquí van las columnas de la tabla para dataActuaciones -->
+            <ng-container matColumnDef="observaciones">
+              <th mat-header-cell *matHeaderCellDef> Observaciones </th>
+              <td mat-cell *matCellDef="let element"> {{element.observaciones}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="usuario">
+              <th mat-header-cell *matHeaderCellDef> Usuario </th>
+              <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="responsable1">
+              <th mat-header-cell *matHeaderCellDef> Responsable 1 </th>
+              <td mat-cell *matCellDef="let element"> {{element.responsable1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="responsable2">
+              <th mat-header-cell *matHeaderCellDef> Responsable 2 </th>
+              <td mat-cell *matCellDef="let element"> {{element.responsable2}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsActuaciones"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsActuaciones;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Tabla para dataDocumentos -->
+      <mat-card *ngIf="dataDocumentos.length > 0" class="tabla-documentos">
+        <mat-card-content>
+          <h2>Tabla de Documentos</h2>
+          <table mat-table [dataSource]="dataDocumentos" class="mat-elevation-z8 table-container">
+            <!-- Aquí van las columnas de la tabla para dataDocumentos -->
+            <ng-container matColumnDef="nombreDocumento">
+              <th mat-header-cell *matHeaderCellDef> Nombre Documento </th>
+              <td mat-cell *matCellDef="let element"> {{element.nombreDocumento}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="precio">
+              <th mat-header-cell *matHeaderCellDef> Precio </th>
+              <td mat-cell *matCellDef="let element"> {{element.precio}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsDocumentos"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsDocumentos;"></tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>

@@ -25,7 +25,6 @@ export class FormulariosExpedientesComponent {
 
   tiposExpediente: TipoExpediente[] = [];
   ngOnInit(): void {
-    console.log("hola");
     this.tipoExpedienteService.getTiposExpediente().subscribe((expediente)=> this.tiposExpediente = expediente)
     console.log(this.tiposExpediente);
   }
