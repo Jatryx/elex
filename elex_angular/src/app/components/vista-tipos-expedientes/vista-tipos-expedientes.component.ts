@@ -14,7 +14,7 @@ export class VistaTiposExpedientesComponent {
 
   dataSource: TipoExpediente[] = [];
   dataSourceEliminados: TipoExpediente[] = [];
-  displayedColumns: string[] = ['id','materia','acciones'];
+  displayedColumns: string[] = ['materia','acciones'];
   constructor(
     private tiposExpedienteService: TipoExpedienteService,
     private dialog: MatDialog

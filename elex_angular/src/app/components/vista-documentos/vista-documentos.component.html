@@ -12,35 +12,30 @@
       Ver Eliminados
     </button>
     <div class="search-container">
-      <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarPorNombreDocumento()" placeholder="Buscar" class="form-control">
+      <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarPorNombreDocumento()" placeholder="Buscar por nombre" class="form-control">
     </div>
 </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>id</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
-    </ng-container>
-
     <ng-container matColumnDef="nombreDocumento">
-      <th mat-header-cell *matHeaderCellDef>nombreDocumento</th>
+      <th mat-header-cell *matHeaderCellDef>Nombre del Documento</th>
       <td mat-cell *matCellDef="let element">{{element.nombreDocumento}}</td>
     </ng-container>
   
  
     <ng-container matColumnDef="precio">
-      <th mat-header-cell *matHeaderCellDef>precio</th>
+      <th mat-header-cell *matHeaderCellDef>Precio</th>
       <td mat-cell *matCellDef="let element">{{element.precio}}€</td>
     </ng-container>
   
   
     <ng-container matColumnDef="descripcion">
-      <th mat-header-cell *matHeaderCellDef>descripcion</th>
+      <th mat-header-cell *matHeaderCellDef>Descripcion</th>
       <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
     </ng-container>
 
     <ng-container matColumnDef="expedientes">
-        <th mat-header-cell *matHeaderCellDef>expedientes</th>
+        <th mat-header-cell *matHeaderCellDef>Nig Expediente</th>
         <td mat-cell *matCellDef="let element">{{element.expediente.nig}}</td>
       </ng-container>
 
@@ -68,6 +63,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+  
 </div>
 </div>
 
@@ -82,35 +78,30 @@
         Ver Existentes
       </button>
       <div class="search-container">
-        <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarPorNombreDocumentoBorrado()" placeholder="Buscar" class="form-control">
+        <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarPorNombreDocumentoBorrado()" placeholder="Buscar por nombre" class="form-control">
       </div>
   </div>
     <table mat-table [dataSource]="dataSourceEliminados" class="mat-elevation-z8 demo-table">
   
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>id</th>
-        <td mat-cell *matCellDef="let element">{{element.id}}</td>
-      </ng-container>
-  
       <ng-container matColumnDef="nombreDocumento">
-        <th mat-header-cell *matHeaderCellDef>nombreDocumento</th>
+        <th mat-header-cell *matHeaderCellDef>Nombre del Documento</th>
         <td mat-cell *matCellDef="let element">{{element.nombreDocumento}}</td>
       </ng-container>
     
    
       <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef>precio</th>
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
         <td mat-cell *matCellDef="let element">{{element.precio}}€</td>
       </ng-container>
     
     
       <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef>descripcion</th>
+        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
         <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
       </ng-container>
   
       <ng-container matColumnDef="expedientes">
-          <th mat-header-cell *matHeaderCellDef>expedientes</th>
+          <th mat-header-cell *matHeaderCellDef>Nig Expediente</th>
           <td mat-cell *matCellDef="let element">{{element.expediente.nig}}</td>
         </ng-container>
   

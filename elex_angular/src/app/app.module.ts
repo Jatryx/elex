@@ -27,6 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import { MenuComponent } from './menu/menu.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
@@ -61,6 +62,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatIconModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
   ],
   providers: [
     provideAnimationsAsync()

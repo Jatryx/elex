@@ -12,19 +12,14 @@
         Ver Eliminados
       </button>
       <div class="search-container">
-        <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarTipoExpedientesExistentes()" placeholder="Buscar" class="form-control">
+        <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarTipoExpedientesExistentes()" placeholder="Buscar por materia" class="form-control">
       </div>
     </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
-    </ng-container>
   
  
     <ng-container matColumnDef="materia">
-      <th mat-header-cell *matHeaderCellDef>materia</th>
+      <th mat-header-cell *matHeaderCellDef>Materia</th>
       <td mat-cell *matCellDef="let element">{{element.materia}}</td>
     </ng-container>
 
@@ -54,18 +49,14 @@
             Ver Existentes
           </button>
           <div class="search-container">
-            <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarTipoExpedientesBorrados()" placeholder="Buscar" class="form-control">
+            <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarTipoExpedientesBorrados()" placeholder="Buscar por materia" class="form-control">
           </div>
       </div>
  
 <table mat-table [dataSource]="dataSourceEliminados" class="mat-elevation-z8 demo-table">
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>Id</th>
-    <td mat-cell *matCellDef="let element">{{element.id}}</td>
-  </ng-container>
 
   <ng-container matColumnDef="materia">
-    <th mat-header-cell *matHeaderCellDef>materia</th>
+    <th mat-header-cell *matHeaderCellDef>Materia</th>
     <td mat-cell *matCellDef="let element">{{element.materia}}</td>
   </ng-container>
 

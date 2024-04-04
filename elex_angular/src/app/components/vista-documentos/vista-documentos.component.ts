@@ -15,7 +15,7 @@ export class VistaDocumentosComponent {
 
   dataSource: Documentos[]  = [];
   dataSourceEliminados: Documentos[] = [];
-  displayedColumns: string[] = ['id','nombreDocumento' , 'precio', 'descripcion', 'expedientes', 'acciones', 'pdf'];
+  displayedColumns: string[] = ['nombreDocumento' , 'precio', 'descripcion', 'expedientes', 'acciones', 'pdf'];
 
   constructor(
     private documentosService: DocumentosService,

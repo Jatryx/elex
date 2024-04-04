@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../../services/servicioLogin/login.service';
-import { Router } from '@angular/router';
+import { AuthServiceService } from '../../services/servicioAuthService/authService.service';
 
 @Component({
   selector: 'app-login',
@@ -8,22 +7,22 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username = '';
-  password = '';
- 
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
-  constructor(private loginService: LoginService, private router: Router) {}
-  /*
-  onSubmit() {
-    this.loginService.login(this.username, this.password)
-      .subscribe((data: any) => { // Explicitly type data as any
-        // Almacenar el token JWT en el almacenamiento local
-        localStorage.setItem('token', data.token);
-        // Redireccionar a la página principal o a la página deseada
-        this.router.navigate(['/formularios-expediente']);
-      }, error => {
-        // Manejar errores de autenticación
-      });
+  constructor(private authService: AuthServiceService) {}
+
+  login() {
+    this.authService.login(this.username, this.password).subscribe(
+      success => {
+        console.log('Inicio de sesión exitoso');
+        // Aquí puedes redirigir al usuario o hacer algo más
+      },
+      error => {
+        console.log('Error en el inicio de sesión', error);
+        // Aquí puedes manejar el error, como mostrar un mensaje al usuario
+      }
+    );
   }
-*/
 }

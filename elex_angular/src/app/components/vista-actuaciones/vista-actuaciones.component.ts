@@ -17,7 +17,7 @@ import { switchMap } from 'rxjs/operators';
 export class VistaActuacionesComponent {
   expedientes: Expedientes[] = [];
   dataSource: Actuaciones[]  = [];
-  displayedColumns: string[] = ['id', 'observaciones', 'finalizado', 'fecha', 'usuario', 'responsable1', 'responsable2', 'consejeria', 'expediente', 'acciones'];
+  displayedColumns: string[] = ['observaciones', 'finalizado', 'fecha', 'usuario', 'responsable1', 'responsable2', 'consejeria', 'expediente', 'acciones'];
 
   constructor(
     private actuacionesService: ActuacionesService,

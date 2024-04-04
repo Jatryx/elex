@@ -12,48 +12,43 @@
       Ver Eliminados
     </button>
     <div class="search-container">
-      <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarExpedientesExistente()" placeholder="Buscar" class="form-control">
+      <input matInput [(ngModel)]="filtro" (ngModelChange)="filtrarExpedientesExistente()" placeholder="Buscar por Nig" class="form-control">
     </div>
 </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef>Id</th>
-      <td mat-cell *matCellDef="let element">{{element.id}}</td>
-    </ng-container>
   
  
     <ng-container matColumnDef="nig">
-      <th mat-header-cell *matHeaderCellDef>nig</th>
+      <th mat-header-cell *matHeaderCellDef>Nig</th>
       <td mat-cell *matCellDef="let element">{{element.nig}}</td>
     </ng-container>
   
   
     <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef>fecha</th>
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
       <td mat-cell *matCellDef="let element">{{element.fecha}}</td>
     </ng-container>
 
     <ng-container matColumnDef="estado">
-        <th mat-header-cell *matHeaderCellDef>estado</th>
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
         <td mat-cell *matCellDef="let element">{{element.estado}}</td>
       </ng-container>
   
   
     <ng-container matColumnDef="opciones">
-      <th mat-header-cell *matHeaderCellDef>opciones</th>
+      <th mat-header-cell *matHeaderCellDef>Opciones</th>
       <td mat-cell *matCellDef="let element">{{element.opciones}}</td>
     </ng-container>
 
     
     <ng-container matColumnDef="descripcion">
-        <th mat-header-cell *matHeaderCellDef>descripcion</th>
+        <th mat-header-cell *matHeaderCellDef>Descripcion</th>
         <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
       </ng-container>
 
     <ng-container matColumnDef="tipo">
-        <th mat-header-cell *matHeaderCellDef>tipo</th>
+        <th mat-header-cell *matHeaderCellDef>Tipo de expediente</th>
         <td mat-cell *matCellDef="let element">{{element.tipo.materia}}</td>
       </ng-container>
 
@@ -82,48 +77,42 @@
         Ver Existentes
       </button>
       <div class="search-container">
-        <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarExpedientesBorrados()" placeholder="Buscar" class="form-control">
+        <input matInput [(ngModel)]="filtroBorrado" (ngModelChange)="filtrarExpedientesBorrados()" placeholder="Buscar por Nig" class="form-control">
       </div>
   </div>
   
     <table mat-table [dataSource]="dataSourceEliminados" class="mat-elevation-z8 demo-table">
-  
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Id</th>
-        <td mat-cell *matCellDef="let element">{{element.id}}</td>
-      </ng-container>
     
-   
       <ng-container matColumnDef="nig">
-        <th mat-header-cell *matHeaderCellDef>nig</th>
+        <th mat-header-cell *matHeaderCellDef>Nig</th>
         <td mat-cell *matCellDef="let element">{{element.nig}}</td>
       </ng-container>
     
     
       <ng-container matColumnDef="fecha">
-        <th mat-header-cell *matHeaderCellDef>fecha</th>
+        <th mat-header-cell *matHeaderCellDef>Fecha</th>
         <td mat-cell *matCellDef="let element">{{element.fecha}}</td>
       </ng-container>
   
       <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef>estado</th>
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
           <td mat-cell *matCellDef="let element">{{element.estado}}</td>
         </ng-container>
     
     
       <ng-container matColumnDef="opciones">
-        <th mat-header-cell *matHeaderCellDef>opciones</th>
+        <th mat-header-cell *matHeaderCellDef>Opciones</th>
         <td mat-cell *matCellDef="let element">{{element.opciones}}</td>
       </ng-container>
   
       
       <ng-container matColumnDef="descripcion">
-          <th mat-header-cell *matHeaderCellDef>descripcion</th>
+          <th mat-header-cell *matHeaderCellDef>Descripcion</th>
           <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
         </ng-container>
   
       <ng-container matColumnDef="tipo">
-          <th mat-header-cell *matHeaderCellDef>tipo</th>
+          <th mat-header-cell *matHeaderCellDef>Tipo de expediente</th>
           <td mat-cell *matCellDef="let element">{{element.tipo.materia}}</td>
         </ng-container>
   

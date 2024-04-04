@@ -66,6 +66,13 @@
 			<version>5.5.13.2</version>
 		</dependency>
 
+		<!-- Para jwt 
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		-->
 	</dependencies>
 
 	<build>
