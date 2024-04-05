@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { Expedientes } from '../../models/modeloExpedientes/expedientes.model';
 import { ExpedientesService } from '../../services/servicioExpedientes/expedientes.service';
 import { FormControl } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-vista-actuaciones',

@@ -22,14 +22,15 @@ import {MatTableModule} from '@angular/material/table';
 import { MatDialogClose } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { FormulariosTipoExpedienteComponent } from './formularios-tipo-expediente/formularios-tipo-expediente.component';
+import { FormulariosTipoExpedienteComponent } from './components/formularios-tipo-expediente/formularios-tipo-expediente.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
-import { MenuComponent } from './menu/menu.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { VistaRelacionExpedienteComponent } from './components/vista-relacion-expediente/vista-relacion-expediente.component';
 import { MatCardModule } from '@angular/material/card';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { MatCardModule } from '@angular/material/card';
     LoginComponent,
     FormulariosTipoExpedienteComponent,
     MenuComponent,
-    VistaRelacionExpedienteComponent
+    VistaRelacionExpedienteComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,

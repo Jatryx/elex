@@ -2,7 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { TipoExpedienteService } from '../../services/servicioTiposExpediente/tipo-expediente.service';
 import { TipoExpediente } from '../../models/modeloTipoExpediente/tipo-expediente.model';
 import { MatDialog } from '@angular/material/dialog';
-import { FormulariosTipoExpedienteComponent } from '../../formularios-tipo-expediente/formularios-tipo-expediente.component';
+import { FormulariosTipoExpedienteComponent } from '../formularios-tipo-expediente/formularios-tipo-expediente.component';
 import Swal from 'sweetalert2';
 
 @Component({

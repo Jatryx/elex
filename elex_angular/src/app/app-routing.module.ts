@@ -7,6 +7,8 @@ import { VistaDocumentosComponent } from './components/vista-documentos/vista-do
 import { VistaTiposExpedientesComponent } from './components/vista-tipos-expedientes/vista-tipos-expedientes.component';
 import { VistaActuacionesComponent } from './components/vista-actuaciones/vista-actuaciones.component';
 import { VistaRelacionExpedienteComponent } from './components/vista-relacion-expediente/vista-relacion-expediente.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+
 
 const routes: Routes = [
   {
@@ -48,6 +50,14 @@ const routes: Routes = [
     { bTitle: 'Vista de Actuaciones'}
     // Ejemplo del endpoint: http://localhost:4200/vista-actuaciones
   },
+
+  {
+    path: 'inicio',
+    component: InicioComponent,
+    data:
+    { bTitle: 'Inicio'}
+  },
+  
 
   {
     path: '',
