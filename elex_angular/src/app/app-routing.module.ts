@@ -8,72 +8,56 @@ import { VistaTiposExpedientesComponent } from './components/vista-tipos-expedie
 import { VistaActuacionesComponent } from './components/vista-actuaciones/vista-actuaciones.component';
 import { VistaRelacionExpedienteComponent } from './components/vista-relacion-expediente/vista-relacion-expediente.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
   {
     path: 'vista-expedientes',
     component: VistaExpedientesComponent,
-    data:
-    { bTitle: 'Vista de Expedientes'}
-    // Ejemplo del endpoint: http://localhost:4200/vista-expedientes
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Vista de Expedientes' }
   },
-
   {
     path: 'vista-documentos',
     component: VistaDocumentosComponent,
-    data:
-    { bTitle: 'Vista de Documentos'}
-    // Ejemplo del endpoint: http://localhost:4200/vista-documentos
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Vista de Documentos' }
   },
-
   {
     path: 'vista-tipos-expedientes',
     component: VistaTiposExpedientesComponent,
-    data:
-    { bTitle: 'Vista de Tipos de Expedientes'}
-    // Ejemplo del endpoint: http://localhost:4200/vista-tipos-expedientes
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Vista de Tipos de Expedientes' }
   },
-
   {
     path: 'vista-relacion-expediente/:nig/:id',
     component: VistaRelacionExpedienteComponent,
-    data:
-    { bTitle: 'Vista de Relación de Expedientes'}
-    // Ejemplo del endpoint: http://localhost:4200/vista-relacion-expediente
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Vista de Relación de Expedientes' }
   },
-
   {
     path: 'vista-actuaciones',
     component: VistaActuacionesComponent,
-    data:
-    { bTitle: 'Vista de Actuaciones'}
-    // Ejemplo del endpoint: http://localhost:4200/vista-actuaciones
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Vista de Actuaciones' }
   },
-
   {
     path: 'inicio',
     component: InicioComponent,
-    data:
-    { bTitle: 'Inicio'}
+    canActivate: [AuthGuard],
+    data: { bTitle: 'Inicio' }
   },
-  
-
   {
     path: '',
     component: LoginComponent,
-    data: 
-    { bTitle: 'Login' }
+    data: { bTitle: 'Login' }
   },
-
   {
     path: 'login',
     component: LoginComponent,
-    data: 
-    { bTitle: 'Login' }
-    // Ejemplo del endpoint: http://localhost:4200/login
+    data: { bTitle: 'Login' }
   }
-  
 ];
 
 @NgModule({

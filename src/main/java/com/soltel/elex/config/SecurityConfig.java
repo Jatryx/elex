@@ -20,7 +20,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filtro(HttpSecurity http) throws Exception {
         http
-            //.cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
             .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers("/api/**").permitAll() 	// Permitir solicitudes a /clientes y /reservas

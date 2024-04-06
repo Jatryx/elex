@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthServiceService } from '../../services/servicioAuthService/authService.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,20 +10,31 @@ import { AuthServiceService } from '../../services/servicioAuthService/authServi
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  rol: String = 'ADMIN';
   errorMessage: string = '';
 
-  constructor(private authService: AuthServiceService) {}
+  constructor(private authService: AuthServiceService, private router:Router) {}
 
   login() {
-    this.authService.login(this.username, this.password).subscribe(
-      success => {
-        console.log('Inicio de sesión exitoso');
-        // Aquí puedes redirigir al usuario o hacer algo más
-      },
+    const credentials = { usuario: this.username, password: this.password };
+    this.authService.login(credentials).subscribe(
+      () => {
+  
+        // Obtener el token y mostrarlo
+        const token = this.authService.getToken();
+        console.log('Token:', token);
+  
+        // Verificar si el token se ha guardado correctamente en el almacenamiento local
+        if (this.authService.isLoggedIn()) {
+          console.log('Token presente en el almacenamiento local.');
+        } else {
+          console.error('No se encontró el token en el almacenamiento local.');
+        }
+  
+        this.router.navigate(['inicio']);
+      },  
       error => {
-        console.log('Error en el inicio de sesión', error);
-        // Aquí puedes manejar el error, como mostrar un mensaje al usuario
+        // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario
+        console.error('Error en el inicio de sesión:', error);
       }
     );
   }

@@ -65,6 +65,7 @@ CREATE TABLE documentos
     nombre_documento VARCHAR(25) NOT NULL,
     descripcion VARCHAR(25) NOT NULL,
 	borrado BOOLEAN  DEFAULT 0,
+	data MEDIUMBLOB,
     FOREIGN KEY (expediente) REFERENCES expedientes (id),
     PRIMARY KEY PK_documentos (id)
 )
@@ -83,18 +84,17 @@ VALUES
 ("SEV-20240320-003", "2024-03-20", 'Enviado', "Urgente", "Test1", 1) ;
 
 
-
 -- Insercción de actuaciones 
 INSERT INTO actuaciones 
-(observaciones, expediente, fecha, usuario, responsable1, responsable2, consejeria) 
+(observaciones, finalizado , expediente, fecha, usuario, responsable1, responsable2, consejeria) 
 VALUES 
-('Observaciones Ejemplo', 1, '2024-03-20', 'Usuario Ejemplo', 'Responsable Ejemplo', 'Responsable Ejemplo', 'Consejería Ejemplo');
+('Observaciones Ejemplo', 0, 1, '2024-03-20', 'Usuario Ejemplo', 'Responsable Ejemplo', 'Responsable Ejemplo', 'Consejería Ejemplo');
 
 -- Insercción en documentos
 INSERT INTO documentos 
 (ruta, precio, expediente, nombre_documento, descripcion) 
 VALUES 
-('/ruta/ejemplo/documento.pdf', 50.00, 1, 'Documento Ejemplo', 'Descripción Documento');
+('documento_SEV-20240320-001_1.pdf', 50.00, 1, 'Documento Ejemploo', 'Descripción Documento');
 
 
 
