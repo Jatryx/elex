@@ -21,3 +21,5 @@ ng serve
 2. La misma es para swagger, que se encontrara en el navbar de la apicacion.
 
 3. Para la creación del documento se hara en el apartado de los documentos, en el cual se podra crear, editar y eliminar los documentos. La carga de los documentos pdf se haran automaticamente en la carpeta elex/src/main/resources/static/pdf.
+   
+1. A la hora de insertar datos en la base de datos, no se incluye ningun documento. Lo deberas insertar en la parte de documentos.

@@ -90,13 +90,6 @@ INSERT INTO actuaciones
 VALUES 
 ('Observaciones Ejemplo', 0, 1, '2024-03-20', 'Usuario Ejemplo', 'Responsable Ejemplo', 'Responsable Ejemplo', 'Consejería Ejemplo');
 
--- Insercción en documentos
-INSERT INTO documentos 
-(ruta, precio, expediente, nombre_documento, descripcion) 
-VALUES 
-('documento_SEV-20240320-001_1.pdf', 50.00, 1, 'Documento Ejemploo', 'Descripción Documento');
-
-
 
 
 
