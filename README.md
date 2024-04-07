@@ -2,17 +2,22 @@
 
 ## Instalación
 
-1. Bajar de Github
-git clone https://github.com/ivanteams/elex
-2. Importar el proyecto en STS y VSC
-3. Instalar la BBDD
-Está en src/main/resources/static/elex.mysql
-4. Ejecutar el proyecto
-> Botón derecho en elex > Ejecutar como > Maven Build > Goals: clean install > [Ejecutar]
-5. En el panel (abajo) Boot Dashboard:
-Botón derecho en elex > start
-> OJO: sale un Token
-6. Probar en http://localhost:8101/login
-> Anda! Y la contraseña? las credenciales son soltel / admin
-7. Está instalado swagger -> http://localhost:8101/swagger-ui/index.html
+1. Instalar las dependecias del maven poara el proyecto
+```bash
+mvn clean install
+```
+2. Instalar la base de datos, para ello se debe ejecutar el script que se encuentra en src/main/resources/static/elex.sql
+3. 
+4. Para ejecutar el proyecto en la parte de fornt se debe ejecutar el siguiente comando
+```bash
+npm istall
+```
+1. Para ejecutar el proyecto en la parte de fornt se debe ejecutar el siguiente comando
+```bash
+ng serve
+```
+1. Una vez que entremos pedira un usuario y contraseña, el usuario es soltel y la contraseña es admin.
+   
+2. La misma es para swagger, que se encontrara en el navbar de la apicacion.
 
+3. Para la creación del documento se hara en el apartado de los documentos, en el cual se podra crear, editar y eliminar los documentos. La carga de los documentos pdf se haran automaticamente en la carpeta elex/src/main/resources/static/pdf.
