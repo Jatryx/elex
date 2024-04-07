@@ -86,8 +86,9 @@ export class VistaDocumentosComponent {
   
       dialogoActualizar.afterClosed().subscribe((result) => {
         if (result) {
-          console.log(result);
-          console.log(result.actuaciones)
+          if(result.actuaciones == null){
+            result.actuaciones = 0;
+          }
           this.isLoading = true;
           this.documentosService
             .actualizarDocumento(

@@ -57,6 +57,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: { bTitle: 'Login' }
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];
 

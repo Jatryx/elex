@@ -27,6 +27,7 @@ export class DocumentosService {
   }
 
   actualizarDocumento(id: number, precio: number, nombreDocumento: string, descripcion: string, idExpediente: number, idActuaciones: number): Observable<Documentos> {
+    console.log(`${this.apiRoot}/actualizar/${id}/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}/${idActuaciones}`);
     return this.http.put<Documentos>(`${this.apiRoot}/actualizar/${id}/${precio}/${nombreDocumento}/${descripcion}/${idExpediente}/${idActuaciones}`, {});
   }
 
